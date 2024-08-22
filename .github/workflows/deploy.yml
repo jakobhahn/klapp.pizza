@@ -18,9 +18,12 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel ein
           chmod 600 ~/.ssh/id_ed25519  # Setzt die richtigen Berechtigungen für den Schlüssel
+          eval "$(ssh-agent -s)"  # Startet den ssh-agent
+          echo "${{ secrets.PP }}" | ssh-add ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel mit der Passphrase hinzu
 
       - name: Deploy to Server
         run: |
-          scp -P 52123 -r ./* jhahn@85.214.106.223:/home  # Kopiert alle Dateien auf deinen Server
+          scp -P 52123 -r ./* jhahn@85.214.106.223:/path/to/your/webroot  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
         env:
-          SERVER: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
+          SSH_PASSPHRASE: ${{ secrets.PP }}  # Nutzt den Secret für die Passphrase
