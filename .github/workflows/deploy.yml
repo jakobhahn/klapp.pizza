@@ -27,7 +27,8 @@ jobs:
 
       - name: Test SSH connection
         run: |
-          sshpass -p "${{ secrets.PP }}" ssh -o StrictHostKeyChecking=no -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
+          sshpass -p "${{ secrets.PP }}" ssh -vvv -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
+
 
       - name: Deploy to Server
         run: |
