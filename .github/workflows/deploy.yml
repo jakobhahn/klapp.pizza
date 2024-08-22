@@ -23,7 +23,7 @@ jobs:
           ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts  # Fügt den Host zur known_hosts Datei hinzu
 
       - name: Test SSH connection
-        run: ssh -v -P 52123 jhahn@85.214.106.223 "echo SSH connection successful"
+        run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
 
       - name: Deploy to Server
         run: |
