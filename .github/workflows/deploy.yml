@@ -13,14 +13,19 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2  # Diese Aktion klont dein Repository in die virtuelle Maschine
 
-      - name: Set up SSH
+      - name: Set up SSH agent
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel ein
-          chmod 600 ~/.ssh/id_ed25519  # Setzt die richtigen Berechtigungen für den Schlüssel
-          eval "$(ssh-agent -s)"  # Startet den ssh-agent
-          echo "${{ secrets.PP }}" | ssh-add ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel mit der Passphrase hinzu
-          ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts  # Fügt den Host zur known_hosts Datei hinzu
+          echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+      - name: Add server to known hosts
+        run: ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts
 
       - name: Test SSH connection
         run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
