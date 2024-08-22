@@ -13,6 +13,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2  # Diese Aktion klont dein Repository in die virtuelle Maschine
 
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh/
@@ -23,11 +26,12 @@ jobs:
           ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts  # Fügt den Host zur known_hosts Datei hinzu
 
       - name: Test SSH connection
-        run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
+        run: |
+          sshpass -p "${{ secrets.PP }}" ssh -o StrictHostKeyChecking=no -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
 
       - name: Deploy to Server
         run: |
-          scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
+          sshpass -p "${{ secrets.PP }}" scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
           SSH_PASSPHRASE: ${{ secrets.PP }}  # Nutzt den Secret für die Passphrase
