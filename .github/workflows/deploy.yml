@@ -13,9 +13,6 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2  # Diese Aktion klont dein Repository in die virtuelle Maschine
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
-
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh/
@@ -26,9 +23,7 @@ jobs:
           ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts  # Fügt den Host zur known_hosts Datei hinzu
 
       - name: Test SSH connection
-        run: |
-          sshpass -p "${{ secrets.PP }}" ssh -vvv -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
-
+        run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
 
       - name: Deploy to Server
         run: |
