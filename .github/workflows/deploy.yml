@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          eval "$(ssh-agent -a $SSH_AUTH_SOCK)" > /dev/null
+          eval "$(ssh-agent -s)" > /dev/null
           
           # Erstelle das SSH_ASKPASS Skript
           echo '#!/bin/sh' > ~/.ssh_askpass
@@ -26,7 +26,7 @@ jobs:
           chmod +x ~/.ssh_askpass
 
           # Füge den Schlüssel mit Hilfe des SSH_ASKPASS hinzu
-          echo "${{ secrets.SERVER }}" | tr -d '\r' | DISPLAY=:0 SSH_ASKPASS=~/.ssh_askpass ssh-add ~/.ssh/id_ed25519 >/dev/null
+          DISPLAY=:0 SSH_ASKPASS=~/.ssh_askpass ssh-add ~/.ssh/id_ed25519 >/dev/null
           
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
 
