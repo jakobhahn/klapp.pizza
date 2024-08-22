@@ -3,26 +3,32 @@ name: Deploy Website
 on:
   push:
     branches:
-      - main  # Dieser Workflow wird ausgeführt, wenn etwas in den "main"-Branch gepusht wird
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # GitHub verwendet eine virtuelle Ubuntu-Maschine, um den Job auszuführen
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2  # Diese Aktion klont dein Repository in die virtuelle Maschine
+        uses: actions/checkout@v2
 
-      - name: Set up SSH agent
+      - name: Set up SSH agent with SSH_ASKPASS
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_ed25519
+          eval "$(ssh-agent -a $SSH_AUTH_SOCK)" > /dev/null
+          
+          # Erstelle das SSH_ASKPASS Skript
+          echo '#!/bin/sh' > ~/.ssh_askpass
+          echo 'echo $SSH_PASSPHRASE' >> ~/.ssh_askpass
+          chmod +x ~/.ssh_askpass
+
+          # Füge den Schlüssel mit Hilfe des SSH_ASKPASS hinzu
+          echo "${{ secrets.SERVER }}" | tr -d '\r' | DISPLAY=:0 SSH_ASKPASS=~/.ssh_askpass ssh-add ~/.ssh/id_ed25519 >/dev/null
+          
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
       - name: Add server to known hosts
         run: ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts
@@ -31,8 +37,6 @@ jobs:
         run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
 
       - name: Deploy to Server
-        run: |
-          sshpass -p "${{ secrets.PP }}" scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
-          SSH_PASSPHRASE: ${{ secrets.PP }}  # Nutzt den Secret für die Passphrase
+        run: scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/
+    env:
+      SSH_PASSPHRASE: ${{ secrets.PP }}
