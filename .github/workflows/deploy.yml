@@ -22,6 +22,9 @@ jobs:
           echo "${{ secrets.PP }}" | ssh-add ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel mit der Passphrase hinzu
           ssh-keyscan -p 52123 85.214.106.223 >> ~/.ssh/known_hosts  # Fügt den Host zur known_hosts Datei hinzu
 
+      - name: Test SSH connection
+        run: ssh -v -P 52123 jhahn@85.214.106.223 "echo SSH connection successful"
+
       - name: Deploy to Server
         run: |
           scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
