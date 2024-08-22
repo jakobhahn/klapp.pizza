@@ -16,11 +16,11 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SERVER1 }}" > ~/.ssh/id_rsa  # Fügt den SSH-Schlüssel ein
+          echo "${{ secrets.SERVER }}" > ~/.ssh/id_rsa  # Fügt den SSH-Schlüssel ein
           chmod 600 ~/.ssh/id_rsa  # Setzt die richtigen Berechtigungen für den Schlüssel
 
       - name: Deploy to Server
         run: |
           scp -P 52123 -r ./* jhahn@85.214.106.223:/home  # Kopiert alle Dateien auf deinen Server
         env:
-          SERVER1: ${{ secrets.SERVER1 }}  # Nutzt den Secret, den du vorher eingerichtet hast
+          SERVER: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
