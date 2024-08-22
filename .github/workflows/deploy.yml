@@ -37,6 +37,6 @@ jobs:
         run: ssh -v -p 52123 jhahn@85.214.106.223 "echo SSH connection successful"
 
       - name: Deploy to Server
-        run: scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/
+        run: scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza
     env:
       SSH_PASSPHRASE: ${{ secrets.PP }}
