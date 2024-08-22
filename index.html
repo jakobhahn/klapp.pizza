@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1W4W6J46S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R1W4W6J46S');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Pop-up</title>
+    <style>
+        /* Grundlegendes Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f0f0f;
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            cursor: none; /* Standard-Mauszeiger ausblenden */
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+	h1:hover {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+            background-position: bottom;
+            background-repeat: repeat-x;
+            border-bottom: 0;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            font-size: 3rem;
+            font-weight: 300;
+        }
+
+	.countdown:hover {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+            background-position: bottom;
+            background-repeat: repeat-x;
+            border-bottom: 0;
+        }
+
+        .countdown div {
+            text-align: center;
+        }
+
+        .countdown div span {
+            font-size: 1rem;
+            color: #888;
+            display: block;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .highlight {
+            color: #e63946;
+            font-weight: 600;
+        }
+
+        /* Maus als roter Punkt */
+        .cursor {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #e63946;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Verstecke den Cursor auf Touch-Geräten */
+        @media (hover: none) and (pointer: coarse) {
+            .cursor {
+                display: none;
+            }
+
+            body {
+                cursor: default; /* Standard-Mauszeiger auf mobilen Geräten anzeigen */
+            }
+        }
+
+        /* Dezent grauer Text unten in der Mitte */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+	/* Anpassungen für den Footer-Text */
+        .footer-heart {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .footer-heart a {
+            border-bottom: 1px solid #e63946;
+            color: #666;
+            padding-bottom: .25em;
+            text-decoration: none;
+        }
+
+        .footer-heart a:hover {
+            color: #e63946;
+/*            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23453886' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+  */        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+	    background-position: bottom;
+            background-repeat: repeat-x;
+            background-size: 20%;
+            border-bottom: 0;
+            padding-bottom: .3em;
+            text-decoration: none;
+        }
+
+        .emoji {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor" id="cursor"></div>
+    <div class="container">
+        <h1>PIZZA POP-UP</h1>
+        <h1 class="highlight">COMING SOON</h1>
+        <div id="countdown" class="countdown">
+            <div>
+                <span id="days">00</span>
+                <span>Tage</span>
+            </div>
+            <div>
+                <span id="hours">00</span>
+                <span>Stunden</span>
+            </div>
+            <div>
+                <span id="minutes">00</span>
+                <span>Minuten</span>
+            </div>
+            <div>
+                <span id="seconds">00</span>
+                <span>Sekunden</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+	<p class="footer-heart">
+  Made with <g-emoji class="g-emoji" alias="heart" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png">
+	  <img class="emoji" alt="heart" height="20" width="20" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png"></g-emoji> by <a href="">Pizza Japoli</a>
+</p>
+</div>
+    </div>
+
+    <script>
+        // Countdown-Zeit festlegen (6. Oktober 2024, 12:00 Uhr)
+        const countdownDate = new Date("October 6, 2024 12:00:00").getTime();
+
+        // Countdown-Funktion
+        const countdownFunction = setInterval(function () {
+            const now = new Date().getTime();
+            const timeLeft = countdownDate - now;
+
+            // Zeitberechnung
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Werte in die HTML-Elemente einfügen
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            // Wenn Countdown vorbei ist
+            if (timeLeft < 0) {
+                clearInterval(countdownFunction);
+                document.querySelector(".container").innerHTML = "<h1 class='highlight'>Pizza Time!</h1>";
+            }
+        }, 1000);
+
+        // Maus als roter Punkt steuern
+        const cursor = document.getElementById('cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Punkt ausblenden, wenn die Maus das Fenster verlässt
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = 0;
+        });
+
+        // Punkt wieder einblenden, wenn die Maus zurückkommt
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = 1;
+        });
+    </script>
+</body>
+
+</html>
