@@ -21,6 +21,6 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          scp -r ./* -p 52123 jhahn@85.214.106.223:/home  # Kopiert alle Dateien auf deinen Server
+          scp -P 52123 -r ./* jhahn@85.214.106.223:/home  # Kopiert alle Dateien auf deinen Server
         env:
           SERVER1: ${{ secrets.SERVER1 }}  # Nutzt den Secret, den du vorher eingerichtet hast
