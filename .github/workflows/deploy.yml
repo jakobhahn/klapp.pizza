@@ -16,8 +16,8 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SERVER }}" > ~/.ssh/id_rsa  # Fügt den SSH-Schlüssel ein
-          chmod 600 ~/.ssh/id_rsa  # Setzt die richtigen Berechtigungen für den Schlüssel
+          echo "${{ secrets.SERVER }}" > ~/.ssh/id_ed25519  # Fügt den SSH-Schlüssel ein
+          chmod 600 ~/.ssh/id_ed25519  # Setzt die richtigen Berechtigungen für den Schlüssel
 
       - name: Deploy to Server
         run: |
