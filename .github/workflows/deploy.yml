@@ -23,7 +23,7 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          scp -P 52123 -r ./* jhahn@85.214.106.223:/path/to/your/webroot  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
+          scp -P 52123 -r ./* jhahn@85.214.106.223:/var/www/html/klapp.pizza/  # Kopiert alle Dateien auf deinen Server und nutzt Port 3123
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER }}  # Nutzt den Secret, den du vorher eingerichtet hast
           SSH_PASSPHRASE: ${{ secrets.PP }}  # Nutzt den Secret für die Passphrase
