@@ -347,54 +347,56 @@ h1:hover {
             }
         }, 1000);
     
-            // Maus als roter Punkt steuern
-            const cursor = document.getElementById('cursor');
-
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            function openPopup() {
-                document.getElementById("popup").style.display = "block";
-                document.querySelector(".cursor").style.zIndex = "10002";  // Stelle sicher, dass der Cursor immer über dem Popup bleibt
-            }
-
-            function closePopup() {
-                document.getElementById("popup").style.display = "none";
-                document.querySelector(".cursor").style.zIndex = "10000";  // Setze den Z-Index des Cursors zurück, wenn das Popup geschlossen wird
-            }
+        // Maus als roter Punkt steuern
+        const cursor = document.getElementById('cursor');
     
-        // Popup öffnen
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-        }
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
     
-        // Popup schließen
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-
-        
-        function updateProgress(currentAmount) {
-            const totalAmount = 20000; // Gesamtbetrag 20.000 Euro
+        function animateProgress(currentAmount, totalAmount = 20000, duration = 2000) {
             const progressElement = document.getElementById('progress');
             const currentAmountElement = document.getElementById('current-amount');
-
-            // Berechne den Prozentsatz des erreichten Betrags
-            const progressPercent = (currentAmount / totalAmount) * 100;
-
-            // Setze die Breite des Fortschrittsbalkens
-            progressElement.style.width = progressPercent + '%';
-
-            // Zeige den aktuellen Betrag an
-            currentAmountElement.innerText = currentAmount.toLocaleString('de-DE');
+            const startTime = performance.now();
+    
+            function updateProgressAnimation(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progressPercentage = Math.min(elapsedTime / duration, 1);
+                const currentProgress = progressPercentage * (currentAmount / totalAmount) * 100;
+    
+                // Setze die Breite des Fortschrittsbalkens
+                progressElement.style.width = currentProgress + '%';
+    
+                // Setze den angezeigten Betrag entsprechend dem Fortschritt
+                currentAmountElement.innerText = Math.floor(progressPercentage * currentAmount).toLocaleString('de-DE');
+    
+                if (elapsedTime < duration) {
+                    requestAnimationFrame(updateProgressAnimation);
+                } else {
+                    // Endgültige Werte setzen
+                    progressElement.style.width = (currentAmount / totalAmount) * 100 + '%';
+                    currentAmountElement.innerText = currentAmount.toLocaleString('de-DE');
+                }
+            }
+    
+            requestAnimationFrame(updateProgressAnimation);
         }
-        
-        // Beispielaufruf mit einem erreichten Betrag von 8.000 Euro
-        updateProgress(8000);
-
+    
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.querySelector(".cursor").style.zIndex = "10002";  // Sicherstellen, dass der Cursor über dem Popup bleibt
+    
+            // Beispiel: Animierte Darstellung eines Fortschrittsbalkens bis zu 8.000 Euro
+            animateProgress(8000); // Hier kannst du die aktuelle Summe eintragen
+        }
+    
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.querySelector(".cursor").style.zIndex = "10000";  // Zurücksetzen des Cursors, wenn das Popup geschlossen wird
+        }
     </script>
+    
     
 </body>
 
