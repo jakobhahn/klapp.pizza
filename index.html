@@ -99,55 +99,6 @@ h1:hover {
     transition: opacity 0.2s ease;
 }
 
-/* Verstecke den Cursor auf Touch-Geräten */
-@media (hover: none) and (pointer: coarse) {
-    .cursor {
-        display: none;
-    }
-
-    body {
-        cursor: default;
-    }
-}
-
-/* Dezent grauer Text unten in der Mitte */
-.footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.footer-heart {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.footer-heart a {
-    border-bottom: 1px solid #e63946;
-    color: #e63946; /* Email-Link in Rot */
-    padding-bottom: .25em;
-    text-decoration: none;
-}
-
-.footer-heart a:hover {
-    color: #c5273a;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-size: 20%;
-    border-bottom: 0;
-    padding-bottom: .3em;
-    text-decoration: none;
-}
-
-.emoji {
-    vertical-align: middle;
-}
-
-/* Popup-Styles */
 .popup {
     position: fixed;
     top: 50%;
@@ -155,7 +106,7 @@ h1:hover {
     transform: translate(-50%, -50%);
     background: #2c2c2c;
     padding: 20px;
-    width: 80%; /* Anpassung: Breite auf 80% gesetzt */
+    width: 80%;
     max-width: 500px;
     max-height: 80%;
     overflow-y: auto;
@@ -163,7 +114,6 @@ h1:hover {
     z-index: 10001;
     display: none;
     border-radius: 8px;
-    cursor: none; /* Entfernt den Standard-Cursor über dem Pop-up */
 }
 
 .popup h2 {
@@ -285,67 +235,50 @@ h1:hover {
     <script>
         // Countdown-Zeit festlegen (6. Oktober 2024, 12:00 Uhr)
         const countdownDate = new Date("October 6, 2024 12:00:00").getTime();
-
+    
         // Countdown-Funktion
         const countdownFunction = setInterval(function () {
             const now = new Date().getTime();
             const timeLeft = countdownDate - now;
-
+    
             // Zeitberechnung
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
+    
             // Werte in die HTML-Elemente einfügen
             document.getElementById("days").innerText = days;
             document.getElementById("hours").innerText = hours;
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
-
+    
             // Wenn Countdown vorbei ist
             if (timeLeft < 0) {
                 clearInterval(countdownFunction);
                 document.querySelector(".container").innerHTML = "<h1 class='highlight'>Pizza Time!</h1>";
             }
         }, 1000);
-
+    
         // Maus als roter Punkt steuern
         const cursor = document.getElementById('cursor');
-
+    
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
-
-        // Punkt ausblenden, wenn die Maus das Fenster verlässt
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = 0;
-        });
-
-        // Punkt wieder einblenden, wenn die Maus zurückkommt
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = 1;
-        });
-
+    
         // Popup öffnen
         function openPopup() {
             document.getElementById("popup").style.display = "block";
-            document.addEventListener('mousemove', updateCursorPosition);
         }
-
+    
         // Popup schließen
         function closePopup() {
             document.getElementById("popup").style.display = "none";
-            document.removeEventListener('mousemove', updateCursorPosition);
-        }
-
-        // Aktualisiere die Cursorposition
-        function updateCursorPosition(e) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
         }
     </script>
+    
 </body>
 
 </html>
