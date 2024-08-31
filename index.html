@@ -3,14 +3,14 @@
 
 <head>
 	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1W4W6J46S"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R1W4W6J46S');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1W4W6J46S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+ 
+      gtag('config', 'G-R1W4W6J46S');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Pop-up</title>
@@ -307,19 +307,11 @@
         // Popup öffnen
         function openPopup() {
             document.getElementById("popup").style.display = "block";
-            document.addEventListener('mousemove', updateCursorPosition);
         }
 
         // Popup schließen
         function closePopup() {
             document.getElementById("popup").style.display = "none";
-            document.removeEventListener('mousemove', updateCursorPosition);
-        }
-
-        // Aktualisiere die Cursorposition
-        function updateCursorPosition(e) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
         }
     </script>
 </body>
