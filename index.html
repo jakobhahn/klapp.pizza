@@ -178,18 +178,20 @@
         }
 
         .popup .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #e63946;
+            color: #fff;
             border: none;
-            color: #e63946;
-            font-size: 1.5rem;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
         }
 
         .popup .close-btn:hover {
-            color: #c5273a;
+            background-color: #c5273a;
         }
 
         .popup .email {
@@ -247,7 +249,6 @@
     </div>
 
     <div id="popup" class="popup">
-        <button class="close-btn" onclick="closePopup()">×</button>
         <h2>Unterstütze unseren Pizzaladen - Gemeinsam für eine bessere Zukunft!</h2>
         <p>
             Wir haben Großes vor: Ein Pizzaladen, der nicht nur die besten Pizzen der Stadt anbietet, sondern auch einen sozialen Mehrwert schafft.
@@ -261,12 +262,13 @@
         </p>
         <p>
             Als Dankeschön für deine Unterstützung wirst du nicht nur Teil unserer Pizzeria-Community, sondern profitierst auch von exklusiven Vorteilen
-            wie Rabatten auf unsere Produkte, einem kostenlosen Supporte Merch Shirt und exklusiven Rabatten.
+            wie Rabatten auf unsere Produkte, einem kostenlosen Supporter:in-Merch-Shirt und weiteren exklusiven Rabatten.
         </p>
         <p>
             <strong>So kannst du helfen:</strong> Klicke einfach auf den untenstehenden Button, um mehr über die Möglichkeiten der Kreditzusage zu erfahren und wie du uns unterstützen kannst.
         </p>
         <p class="email">Kontakt: <a href="mailto:funding@klapp.pizza">funding@klapp.pizza</a></p>
+        <button class="close-btn" onclick="closePopup()">Schließen</button>
     </div>
 
     <script>
