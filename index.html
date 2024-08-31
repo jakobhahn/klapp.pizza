@@ -309,13 +309,23 @@ h1:hover {
             }
         }, 1000);
     
-        // Maus als roter Punkt steuern
-        const cursor = document.getElementById('cursor');
-    
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+            // Maus als roter Punkt steuern
+            const cursor = document.getElementById('cursor');
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            function openPopup() {
+                document.getElementById("popup").style.display = "block";
+                document.querySelector(".cursor").style.zIndex = "10002";  // Stelle sicher, dass der Cursor immer über dem Popup bleibt
+            }
+
+            function closePopup() {
+                document.getElementById("popup").style.display = "none";
+                document.querySelector(".cursor").style.zIndex = "10000";  // Setze den Z-Index des Cursors zurück, wenn das Popup geschlossen wird
+            }
     
         // Popup öffnen
         function openPopup() {
@@ -326,6 +336,7 @@ h1:hover {
         function closePopup() {
             document.getElementById("popup").style.display = "none";
         }
+
     </script>
     
 </body>
