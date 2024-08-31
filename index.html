@@ -127,13 +127,13 @@
 
         .footer-heart a {
             border-bottom: 1px solid #e63946;
-            color: #666;
+            color: #e63946;
             padding-bottom: .25em;
             text-decoration: none;
         }
 
         .footer-heart a:hover {
-            color: #e63946;
+            color: #c5273a;
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
             background-position: bottom;
             background-repeat: repeat-x;
@@ -163,6 +163,7 @@
             z-index: 10001;
             display: none;
             border-radius: 8px;
+            cursor: none; /* Entfernt den Standard-Cursor über dem Pop-up */
         }
 
         .popup h2 {
@@ -197,7 +198,7 @@
         .popup .email {
             margin-top: 20px;
             font-size: 1rem;
-            color: #888;
+            color: #e63946;
             text-align: center;
         }
 
@@ -262,7 +263,7 @@
         </p>
         <p>
             Als Dankeschön für deine Unterstützung wirst du nicht nur Teil unserer Pizzeria-Community, sondern profitierst auch von exklusiven Vorteilen
-            wie Rabatten auf unsere Produkte, einem kostenlosen Supporter:in-Merch-Shirt und weiteren exklusiven Rabatten.
+            wie Rabatten auf unsere Produkte, einem kostenlosen Supporter:in-Merch-Shirt und einem exklusiven Soft Opening Event.
         </p>
         <p>
             <strong>So kannst du helfen:</strong> Klicke einfach auf den untenstehenden Button, um mehr über die Möglichkeiten der Kreditzusage zu erfahren und wie du uns unterstützen kannst.
@@ -320,11 +321,19 @@
         // Popup öffnen
         function openPopup() {
             document.getElementById("popup").style.display = "block";
+            document.addEventListener('mousemove', updateCursorPosition);
         }
 
         // Popup schließen
         function closePopup() {
             document.getElementById("popup").style.display = "none";
+            document.removeEventListener('mousemove', updateCursorPosition);
+        }
+
+        // Aktualisiere die Cursorposition
+        function updateCursorPosition(e) {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         }
     </script>
 </body>
