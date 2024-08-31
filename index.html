@@ -257,7 +257,6 @@
         </p>
         <button class="close-btn" onclick="closePopup()">Schließen</button>
     </div>
-    
 
     <script>
         // Countdown-Zeit festlegen (6. Oktober 2024, 12:00 Uhr)
@@ -308,11 +307,19 @@
         // Popup öffnen
         function openPopup() {
             document.getElementById("popup").style.display = "block";
+            document.addEventListener('mousemove', updateCursorPosition);
         }
 
         // Popup schließen
         function closePopup() {
             document.getElementById("popup").style.display = "none";
+            document.removeEventListener('mousemove', updateCursorPosition);
+        }
+
+        // Aktualisiere die Cursorposition
+        function updateCursorPosition(e) {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         }
     </script>
 </body>
