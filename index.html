@@ -220,6 +220,37 @@ h1:hover {
 .popup-link:hover {
     color: #c5273a;
 }
+
+.progress-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.progress-label {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #444;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 25px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.progress {
+    height: 100%;
+    background-color: #e63946;
+    width: 0%;
+    border-radius: 5px 0 0 5px;
+    transition: width 0.4s ease;
+}
+
     </style>
 </head>
 
@@ -265,6 +296,15 @@ h1:hover {
             Um dieses ambitionierte Projekt zu verwirklichen, benötigen wir deine Unterstützung. Wir suchen nach engagierten Unterstützer:innen,
             die bereit sind, uns mit einer sozialen Kreditzusage zu helfen, um diesen Traum Wirklichkeit werden zu lassen.
         </p>
+        <div class="progress-container">
+            <div class="progress-label">
+                Erreichte Kreditsumme: <span id="current-amount">0</span> / 20.000 Euro
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+        
         <p>
             <strong>Deine Chance, Teil dieses Projekts zu sein:</strong> Wir bieten dir die Möglichkeit, uns mit einer Kreditzusage ab 1.000 Euro zu unterstützen.
             Die Zinsen kannst du zwischen 0,1 % und 1,5 % wählen. Es ist eine Laufzeit von 5 Jahren angestrebt. Deine Unterstützung hilft uns,
@@ -335,6 +375,25 @@ h1:hover {
         function closePopup() {
             document.getElementById("popup").style.display = "none";
         }
+
+        
+        function updateProgress(currentAmount) {
+            const totalAmount = 20000; // Gesamtbetrag 20.000 Euro
+            const progressElement = document.getElementById('progress');
+            const currentAmountElement = document.getElementById('current-amount');
+
+            // Berechne den Prozentsatz des erreichten Betrags
+            const progressPercent = (currentAmount / totalAmount) * 100;
+
+            // Setze die Breite des Fortschrittsbalkens
+            progressElement.style.width = progressPercent + '%';
+
+            // Zeige den aktuellen Betrag an
+            currentAmountElement.innerText = currentAmount.toLocaleString('de-DE');
+        }
+        
+        // Beispielaufruf mit einem erreichten Betrag von 8.000 Euro
+        updateProgress(8000);
 
     </script>
     
