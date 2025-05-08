@@ -1,410 +1,126 @@
 <!DOCTYPE html>
-<html lang="de">
-
+<html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1W4W6J46S"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
- 
-      gtag('config', 'G-R1W4W6J46S');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza Pop-up</title>
+    <title>joschi - Pizza Bistro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Grundlegendes Styling */
-body {
-    margin: 0;
-    padding: 0;
-    background: #0f0f0f;
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-    cursor: none;
-}
+        /* Customizations to match image if Tailwind defaults aren't enough */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #38A169; /* Matching joschi-green */
+            background-color: #FFFFFF;
+        }
+        /* If using the tailwind.config.js approach with a build step, these would be utility classes.
+           For CDN, we can define them here or use arbitrary values in classes. */
+        .text-joschi-green { color: #38A169; }
+        .font-joschi { font-family: 'Poppins', sans-serif; }
 
-.container {
-    text-align: center;
-    padding: 20px;
-    max-width: 600px;
-    width: 100%;
-    z-index: 10;
-    position: relative;
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin: 0;
-    font-weight: 400;
-    letter-spacing: 2px;
-}
-
-h1:hover {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 20'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .8s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,10 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
-    background-position: bottom;
-    background-repeat: repeat-x;
-    border-bottom: 0;
-}
-
-.countdown {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 50px;
-    font-size: 3rem;
-    font-weight: 300;
-}
-
-.countdown:hover {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 20'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .8s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,10 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
-    background-position: bottom;
-    background-repeat: repeat-x;
-    border-bottom: 0;
-}
-
-.countdown div {
-    text-align: center;
-}
-
-.countdown div span {
-    font-size: 1rem;
-    color: #888;
-    display: block;
-    margin-top: 10px;
-    text-transform: uppercase;
-}
-
-.highlight {
-    color: #e63946;
-    font-weight: 600;
-}
-
-/* Maus als roter Punkt */
-.cursor {
-    position: fixed;
-    width: 15px;
-    height: 15px;
-    background-color: #e63946;
-    border-radius: 50%;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 10002; /* Höher als das Pop-up, damit der Cursor darüber bleibt */
-    opacity: 1;
-    transition: opacity 0.2s ease;
-}
-
-/* Verstecke den Cursor auf Touch-Geräten */
-@media (hover: none) and (pointer: coarse) {
-    .cursor {
-        display: none;
-    }
-
-    body {
-        cursor: default;
-    }
-}
-
-/* Dezent grauer Text unten in der Mitte */
-.footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.footer-heart {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.footer-heart a {
-    border-bottom: 1px solid #e63946;
-    color: #e63946; /* Email-Link in Rot */
-    padding-bottom: .25em;
-    text-decoration: none;
-}
-
-.footer-heart a:hover {
-    color: #c5273a;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23e63946' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-size: 20%;
-    border-bottom: 0;
-    padding-bottom: .3em;
-    text-decoration: none;
-}
-
-.emoji {
-    vertical-align: middle;
-}
-
-/* Popup-Styles */
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #2c2c2c;
-    padding: 20px;
-    width: 80%;
-    max-width: 500px;
-    max-height: 80%;
-    overflow-y: auto;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-    z-index: 10001;
-    display: none;
-    border-radius: 8px;
-}
-
-.popup h2 {
-    margin-top: 0;
-    color: #e63946;
-    font-size: 1.5rem;
-}
-
-.popup p {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #ddd;
-}
-
-.popup .close-btn {
-    display: block;
-    margin: 20px auto 0;
-    padding: 10px 20px;
-    background-color: #e63946;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: none; --pointer
-    font-size: 1rem;
-    text-align: center;
-}
-
-.popup .close-btn:hover {
-    background-color: #c5273a;
-}
-
-.popup .email {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #888;
-    text-align: center;
-}
-
-.popup .email a {
-    color: #e63946; /* Email-Link in Rot */
-    text-decoration: none;
-}
-
-.popup .email a:hover {
-    color: #c5273a;
-    text-decoration: underline;
-}
-
-.popup-link {
-    color: #e63946;
-    cursor: none; --pointer
-    text-decoration: underline;
-}
-
-.popup-link:hover {
-    color: #c5273a;
-}
-
-.progress-container {
-    margin: 20px auto; /* Zentriert den Container horizontal */
-    width: 80%; /* Breite des Fortschrittsbalkens */
-    max-width: 400px; /* Maximale Breite des Fortschrittsbalkens */
-    text-align: center;
-}
-
-.progress-label {
-    margin-bottom: 10px;
-    font-size: 1rem;
-    color: #fff;
-}
-
-.progress-bar {
-    width: 100%;
-    background-color: #444;
-    border-radius: 5px;
-    overflow: hidden;
-    height: 25px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.progress {
-    height: 100%;
-    background-color: #e63946;
-    width: 0%;
-    border-radius: 5px 0 0 5px;
-    transition: width 0.4s ease;
-}
-.popup p.small-text {
-    font-size: 0.8rem; /* Kleinere Schriftgröße */
-    color: #aaa; /* Optional: etwas helleres Grau für den Text */
-}
+        /* Specific weights as observed in the image */
+        .joschi-brand { font-weight: 500; /* Medium for "joschi" */ }
+        .joschi-tagline { font-weight: 500; /* Medium for "Pizza Bistro" */ }
+        .joschi-section-heading { font-weight: 100; /* Thin for "menu", "contact" */ }
+        .joschi-item-heading { font-weight: 100; /* Thin for "#1 vegi" etc. */ }
+        .joschi-item-description { font-weight: 100; /* Thin for descriptions */ }
 
     </style>
-</head>
-
-<body>
-    <div class="cursor" id="cursor"></div>
-    <div class="container">
-        <h1>PIZZA POP-UP</h1>
-        <h1 class="highlight">COMING SOON</h1>
-        <div id="countdown" class="countdown">
-            <div>
-                <span id="days">00</span>
-                <span>Tage</span>
-            </div>
-            <div>
-                <span id="hours">00</span>
-                <span>Stunden</span>
-            </div>
-            <div>
-                <span id="minutes">00</span>
-                <span>Minuten</span>
-            </div>
-            <div>
-                <span id="seconds">00</span>
-                <span>Sekunden</span>
-            </div>
-        </div>
-        <p class="popup-link" onclick="openPopup()">Unterstütze unser Crowdfunding-Projekt!</p>
-    </div>
-    <div class="footer">
-        <p class="footer-heart">
-            Made with <g-emoji class="g-emoji" alias="heart"
-                fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png">
-                <img class="emoji" alt="heart" height="20" width="20"
-                    src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png"></g-emoji> by <a
-                href="">Pizza Japoli</a>
-        </p>
-    </div>
-
-    <div id="popup" class="popup">
-        <h2>Unterstütze unseren Pizzaladen - Gemeinsam für eine bessere Zukunft!</h2>
-        <div class="progress-container">
-            <div class="progress-label">
-                Erreichte Kreditsumme: <span id="current-amount">0</span> / 20.000 Euro
-            </div>
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
-        </div>
-        <p>
-            Wir haben Großes vor: Ein Pizzaladen, der nicht nur die besten Pizzen der Stadt anbietet, sondern auch dazu beiträgt, bezahlbare Gastronomie im Viertel zu erhalten.
-            Um dieses ambitionierte Projekt zu verwirklichen, benötigen wir deine Unterstützung. Wir suchen nach engagierten Unterstützer:innen,
-            die bereit sind, uns mit einer sozialen Kreditzusage zu helfen, um diesen Traum Wirklichkeit werden zu lassen.
-        </p>
-        <p>
-            <strong>Deine Chance, Teil dieses Projekts zu sein:</strong> Wir bieten dir die Möglichkeit, uns mit einer Kreditzusage ab 1.000 Euro zu unterstützen.
-            Die Zinsen kannst du zwischen 0,1 % und 1,5 % wählen. Es ist eine Laufzeit von 5 Jahren angestrebt. Deine Unterstützung hilft uns,
-            die notwendige Finanzierung für den Aufbau und die Eröffnung unseres Pizzaladens sicherzustellen.
-        </p>
-        <p>
-            Als Dankeschön für deine Unterstützung wirst du nicht nur Teil unserer Pizzeria-Community, sondern profitierst auch von Rabatten auf unsere Produkte, einem kostenlosen Supporter:in-Shirt und einem spannenden Soft Opening Event.
-        </p>
-        <p>
-            <strong>So kannst du helfen:</strong> Klicke einfach auf die Kontakt E-Mail und fordere das Informationsblatt an, um mehr über die Möglichkeiten der Kreditzusage zu erfahren und wie du uns unterstützen kannst.
-        </p>
-        <p class="email">Kontakt: <a href="mailto:funding@klapp.pizza">funding@klapp.pizza</a></p>
-        <p class="small-text">
-            <strong>Pizza Japoli</strong><br>Inh. Jakob Hahn<br>Kornträgergang 15<br>20355 Hamburg<br>Steuernummer: 48/084/01296 <br>Kontonummer: DE52 1001 9000 1000 0030 41
-        </p>
-        <button class="close-btn" onclick="closePopup()">Schließen</button>
-    </div>
-
     <script>
-        // Countdown-Zeit festlegen (6. Oktober 2024, 12:00 Uhr)
-        const countdownDate = new Date("March 15, 2025 12:00:00").getTime();
-    
-        // Countdown-Funktion
-        const countdownFunction = setInterval(function () {
-            const now = new Date().getTime();
-            const timeLeft = countdownDate - now;
-    
-            // Zeitberechnung
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-    
-            // Werte in die HTML-Elemente einfügen
-            document.getElementById("days").innerText = days;
-            document.getElementById("hours").innerText = hours;
-            document.getElementById("minutes").innerText = minutes;
-            document.getElementById("seconds").innerText = seconds;
-    
-            // Wenn Countdown vorbei ist
-            if (timeLeft < 0) {
-                clearInterval(countdownFunction);
-                document.querySelector(".container").innerHTML = "<h1 class='highlight'>Pizza Time!</h1>";
+        // Script to apply the custom color from tailwind.config.js if you were using a build step
+        // For CDN, the <style> block above or inline arbitrary values are more direct.
+        // This configures Tailwind JIT CDN to use our custom settings.
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'joschi-green': '#38A169',
+              },
+              fontFamily: {
+                'sans': ['Poppins', 'sans-serif'],
+              },
             }
-        }, 1000);
-    
-        // Maus als roter Punkt steuern
-        const cursor = document.getElementById('cursor');
-    
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-    
-        function animateProgress(currentAmount, totalAmount = 20000, duration = 2000) {
-            const progressElement = document.getElementById('progress');
-            const currentAmountElement = document.getElementById('current-amount');
-            const startTime = performance.now();
-    
-            function updateProgressAnimation(currentTime) {
-                const elapsedTime = currentTime - startTime;
-                const progressPercentage = Math.min(elapsedTime / duration, 1);
-                const currentProgress = progressPercentage * (currentAmount / totalAmount) * 100;
-    
-                // Setze die Breite des Fortschrittsbalkens
-                progressElement.style.width = currentProgress + '%';
-    
-                // Setze den angezeigten Betrag entsprechend dem Fortschritt
-                currentAmountElement.innerText = Math.floor(progressPercentage * currentAmount).toLocaleString('de-DE');
-    
-                if (elapsedTime < duration) {
-                    requestAnimationFrame(updateProgressAnimation);
-                } else {
-                    // Endgültige Werte setzen
-                    progressElement.style.width = (currentAmount / totalAmount) * 100 + '%';
-                    currentAmountElement.innerText = currentAmount.toLocaleString('de-DE');
-                }
-            }
-    
-            requestAnimationFrame(updateProgressAnimation);
+          }
         }
-    
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.querySelector(".cursor").style.zIndex = "10002";  // Sicherstellen, dass der Cursor über dem Popup bleibt
-    
-            // Beispiel: Animierte Darstellung eines Fortschrittsbalkens bis zu 8.000 Euro
-            animateProgress(21000); // Hier kannst du die aktuelle Summe eintragen
-        }
-    
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.querySelector(".cursor").style.zIndex = "10000";  // Zurücksetzen des Cursors, wenn das Popup geschlossen wird
-        }
-    </script>
-    
-    
+      </script>
+</head>
+<body class="bg-white text-joschi-green font-joschi">
+    <!-- Floating Background Image -->
+    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-0">
+        <img src="home.png" alt="Background illustration" class="w-[300%] h-[300%] object-contain opacity-10 translate-x-1/4">
+    </div>
+
+    <div class="container mx-auto px-6 py-8 md:px-12 md:py-12">
+
+        <!-- Header-like Text Elements -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 md:mb-16">
+            <h1 class="text-5xl md:text-6xl joschi-brand text-joschi-green mb-2 sm:mb-0">joschi</h1>
+            <p class="text-2xl md:text-3xl joschi-tagline text-joschi-green">Pizza Bistro</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-16 items-start">
+
+            <!-- Left/Primary Column (Menu Section) -->
+            <section id="menu">
+                <h2 class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">menu</h2>
+                <div class="space-y-5 md:space-y-6">
+                    <div>
+                        <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">#1 wurst</h3>
+                        <p class="text-base md:text-lg joschi-item-description text-joschi-green">Basilikum, Pesto Genovese, Mortadella, Pistazien, Rauke</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">#2 vegi</h3>
+                        <p class="text-base md:text-lg joschi-item-description text-joschi-green">Tomate, Strattiattella, Olivenöl, Rauke</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">#3 vegan</h3>
+                        <p class="text-base md:text-lg joschi-item-description text-joschi-green">Tomate, Mozzarella, Basilikum, Olivenöl</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">#4 spezial</h3>
+                        <p class="text-base md:text-lg joschi-item-description text-joschi-green">Monatlich wechselnde Pizza</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right/Secondary Column (Contact Section & Illustration) -->
+            <section id="contact-and-illustration" class="relative">
+        
+                <!-- Contact Content -->
+                <div class="relative z-10">
+                    <h2 class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-4 md:mb-6">contact</h2>
+                    <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
+                            Seilerstr.40<br>
+                            20359 Hamburg<br>
+                            St. Pauli<br><br>
+                        <a href="https://www.google.com/maps/place/joschi+pizza+bistro/@53.5506012,9.9588605,17z/data=!3m1!4b1!4m6!3m5!1s0x47b18f55901cf549:0xbbc00fa109dbe4db!8m2!3d53.5506013!4d9.9637314!16s%2Fg%2F11x14gkb4z?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="hover:underline">
+                            > Maps
+                        </a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
+                        <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a><br>
+                        <a href="tel:+4989292039" class="hover:underline">+49 1749775125</a>
+                    </p>
+                </div>
+            </section>
+
+        </main>
+
+
+        <br><br><br><br><br><br>
+    </div>
+    <footer class="mt-16 pt-8 border-t border-joschi-green/20 relative z-50">
+        <div class="flex flex-col items-center space-y-2">
+            <p class="text-gray-400 joschi-item-description">made with love ❤️ by <a href="https://klapp.pizza" class="hover:underline relative z-50">klapp.pizza</a> in 2025</p>
+            <a href="impressum.html" class="text-joschi-green hover:underline joschi-item-description relative z-50">Impressum</a>
+        </div>
+    </footer>
 </body>
 
 </html>
