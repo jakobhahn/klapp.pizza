@@ -21,6 +21,7 @@
         .joschi-section-heading { font-weight: 200; }
         .joschi-item-heading { font-weight: 200; }
         .joschi-item-description { font-weight: 200; }
+        .joschi-item-footer { font-weight: lighter; }
     </style>
     <script>
         tailwind.config = {
@@ -60,8 +61,9 @@
 
                 <section>
                     <h3 class="text-xl md:text-2xl joschi-item-heading mb-4">Kontakt</h3>
-                    <p>Telefon: +49 151 40304809<br>
-                    E-Mail: jakob@klapp.pizza</p>
+                    <p>Telefon:      <a href="tel:+4915140304809" class="hover:underline">+49 151 40304809</a>
+                    <p> E-Mail:      <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a><br>
+
                 </section>
 
                 <section>
@@ -89,7 +91,7 @@
         <!-- Footer -->
         <footer class="mt-16 pt-8 border-t border-joschi-green/20">
             <div class="flex justify-center">
-                <a href="index.html" class="text-joschi-green hover:underline joschi-item-description">← Zurück zur Startseite</a>
+                <a href="index.html" class="text-joschi-green hover:underline joschi-item-footer">← Zurück zur Startseite</a>
             </div>
         </footer>
     </div>
