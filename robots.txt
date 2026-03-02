@@ -1,0 +1,28 @@
+# robots.txt for klapp.pizza / joschi Pizza Bistro
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://klapp.pizza/sitemap.xml
+
+# AI Crawlers (optimiert für KI-Indexierung)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /

@@ -1,9 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum - joschi Pizza Bistro</title>
+    <meta name="description" content="Impressum joschi Pizza Bistro Hamburg – Angaben gemäß § 5 TMG. Seilerstr. 40, 20359 Hamburg St. Pauli. Kontakt & Verantwortlich.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://klapp.pizza/impressum.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://klapp.pizza/impressum.html">
+    <meta property="og:title" content="Impressum – joschi Pizza Bistro Hamburg">
+    <meta property="og:description" content="Impressum und rechtliche Angaben joschi Pizza Bistro, Seilerstr. 40, Hamburg St. Pauli.">
+    <meta property="og:locale" content="de_DE">
+    
+    <!-- Performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,11 +51,34 @@
           }
         }
     </script>
+    
+    <!-- JSON-LD for Impressum/Legal Entity -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "joschi Pizza Bistro",
+      "url": "https://klapp.pizza",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Seilerstr. 40",
+        "addressLocality": "Hamburg",
+        "postalCode": "20359",
+        "addressCountry": "DE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+4915140304809",
+        "email": "jakob@klapp.pizza",
+        "contactType": "customer service"
+      }
+    }
+    </script>
 </head>
 <body class="bg-white text-joschi-green font-joschi">
     <div class="container mx-auto px-6 py-8 md:px-12 md:py-12">
         <!-- Header -->
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 md:mb-16">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 md:mb-16" role="banner">
             <h1 class="text-5xl md:text-6xl joschi-brand text-joschi-green mb-2 sm:mb-0">joschi</h1>
             <p class="text-2xl md:text-3xl joschi-tagline text-joschi-green">Pizza Bistro</p>
         </header>
@@ -61,9 +98,8 @@
 
                 <section>
                     <h3 class="text-xl md:text-2xl joschi-item-heading mb-4">Kontakt</h3>
-                    <p>Telefon:      <a href="tel:+4915140304809" class="hover:underline">+49 151 40304809</a>
-                    <p> E-Mail:      <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a><br>
-
+                    <p>Telefon: <a href="tel:+4915140304809" class="hover:underline">+49 151 40304809</a><br>
+                    E-Mail: <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a></p>
                 </section>
 
                 <section>
@@ -75,9 +111,9 @@
 
                 <section>
                     <h3 class="text-xl md:text-2xl joschi-item-heading mb-4">Design</h3>
-                    <p>Illustrationen von <a href="https://www.instagram.com/superbanali/">Ali</a><br>
-                    <p>Art Direktion und CD von <a href="https://www.instagram.com/plastic.gurl/">Maria</a><br>
-                    <p>Technische Umsetzung von <a href="https://philippheinrich.de/">Philipp</a><br>
+                    <p>Illustrationen von <a href="https://www.instagram.com/superbanali/" rel="noopener noreferrer">Ali</a><br>
+                    Art Direktion und CD von <a href="https://www.instagram.com/plastic.gurl/" rel="noopener noreferrer">Maria</a><br>
+                    Technische Umsetzung von <a href="https://philippheinrich.de/" rel="noopener noreferrer">Philipp</a></p>
                 </section>
 
                 <section>
@@ -91,7 +127,7 @@
         <!-- Footer -->
         <footer class="mt-16 pt-8 border-t border-joschi-green/20">
             <div class="flex justify-center">
-                <a href="index.html" class="text-joschi-green hover:underline joschi-item-footer">← Zurück zur Startseite</a>
+                <a href="index.html" class="text-joschi-green hover:underline joschi-item-footer" rel="prev">← Zurück zur Startseite</a>
             </div>
         </footer>
     </div>
