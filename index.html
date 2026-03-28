@@ -182,6 +182,8 @@
             font-family: 'Poppins', sans-serif;
             color: #38A169; /* Matching joschi-green */
             background-color: #FFFFFF;
+            overflow-x: hidden;
+            padding-top: 68px;
         }
         /* If using the tailwind.config.js approach with a build step, these would be utility classes.
            For CDN, we can define them here or use arbitrary values in classes. */
@@ -196,15 +198,28 @@
         .joschi-item-description { font-weight: normal; /* Thin for descriptions */ }
         .joschi-item-footer { font-weight: lighter; }
         .joschi-banner-track {
+            display: flex;
+            width: max-content;
+            min-width: 100%;
             animation: joschi-marquee 20s linear infinite;
             will-change: transform;
         }
+        .joschi-banner-content {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 2rem;
+            padding-right: 2rem;
+        }
         .joschi-page-shell {
-            padding-top: 52px;
+            padding-top: 112px;
         }
         @media (min-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
             .joschi-page-shell {
-                padding-top: 60px;
+                padding-top: 0;
             }
         }
         @keyframes joschi-marquee {
@@ -228,25 +243,36 @@
         }
       </script>
 </head>
-<body class="bg-white text-joschi-green font-joschi">
+<body class="bg-white text-joschi-green font-joschi overflow-x-hidden">
     <div class="fixed inset-x-0 top-0 z-50 overflow-hidden border-b border-joschi-green/20 bg-joschi-green text-white">
-        <div class="joschi-banner-track flex w-max min-w-full items-center gap-8 whitespace-nowrap px-4 py-3 text-sm uppercase tracking-[0.16em] md:px-6 md:py-4 md:text-base">
-            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
-            <span aria-hidden="true">•</span>
-            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
-            <span aria-hidden="true">•</span>
-            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
-            <span aria-hidden="true">•</span>
-            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
+        <div class="px-4 py-3 text-sm uppercase tracking-[0.16em] md:px-6 md:py-4 md:text-base">
+        <div class="joschi-banner-track whitespace-nowrap">
+            <div class="joschi-banner-content">
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+            </div>
+            <div class="joschi-banner-content" aria-hidden="true">
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+                <span>🎉 Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr 🎉</span>
+                <span aria-hidden="true">•</span>
+            </div>
+        </div>
         </div>
     </div>
 
     <!-- Floating Background Image -->
-    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-0">
+    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-0 overflow-hidden">
         <img src="home.png" alt="joschi Pizza Bistro Hamburg – Illustration" width="1200" height="630" loading="lazy" decoding="async" class="w-[300%] h-[300%] object-contain opacity-10 translate-x-1/4">
     </div>
 
-    <div class="container mx-auto px-6 py-8 md:px-12 md:py-12 joschi-page-shell">
+    <div class="container mx-auto px-6 py-8 md:px-12 md:py-12">
 
         <!-- Header-like Text Elements -->
         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 md:mb-16" role="banner">
@@ -259,7 +285,7 @@
 
             <!-- Left/Primary Column (Menu Section) -->
             <section id="menu" aria-labelledby="menu-heading">
-                <h2 id="menu-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">menu</h2>
+                <h2 id="menu-heading" data-i18n="menu_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">menü</h2>
                 <div class="space-y-5 md:space-y-6">
                     <div>
                         <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">#1 wurst</h3>
@@ -285,27 +311,41 @@
         
                 <!-- Contact Content -->
                 <div class="relative z-10">
-                    <h2 id="contact-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-4 md:mb-6">contact</h2>
+                    <h2 id="contact-heading" data-i18n="contact_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-4 md:mb-6">kontakt</h2>
                     <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">Seilerstr.40<br>
                             20359 Hamburg<br>
                             St. Pauli<br><br>
-                        <a href="https://www.google.com/maps/place/joschi+pizza+bistro/@53.5506012,9.9588605,17z/data=!3m1!4b1!4m6!3m5!1s0x47b18f55901cf549:0xbbc00fa109dbe4db!8m2!3d53.5506013!4d9.9637314!16s%2Fg%2F11x14gkb4z?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="hover:underline" aria-label="joschi Pizza Bistro auf Google Maps anzeigen">
-                            > Maps
+                        <a href="https://www.google.com/maps/place/joschi+pizza+bistro/@53.5506012,9.9588605,17z/data=!3m1!4b1!4m6!3m5!1s0x47b18f55901cf549:0xbbc00fa109dbe4db!8m2!3d53.5506013!4d9.9637314!16s%2Fg%2F11x14gkb4z?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="hover:underline" aria-label="joschi Pizza Bistro auf Google Maps anzeigen" data-i18n="map_link">
+                            > Karte
                         </a>
                     <br>
                     <br>
-                    <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">Öffnungszeiten</h3>
-                    <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
+                    <h3 data-i18n="opening_hours_heading" class="text-xl md:text-2xl joschi-item-heading text-joschi-green">Öffnungszeiten</h3>
+                    <p data-i18n-html="opening_hours_body" class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
                     Mittwoch–Samstag 17–22 Uhr <br> Donnerstag | Freitag 12–14 Uhr 
                     </p>
                     <br>
                     <br>
-                    <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">Buchungsanfragen & Feedback</h3>
+                    <h3 data-i18n="booking_heading" class="text-xl md:text-2xl joschi-item-heading text-joschi-green">Buchungsanfragen & Feedback</h3>
                     <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
-                        <a href="#reservierung" class="hover:underline">> Reservieren</a><br>
+                        <a href="#reservierung" class="hover:underline" data-i18n="reserve_link">> Reservieren</a><br>
                         <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a><br>
                         <a href="tel:+4915140304809" class="hover:underline">+49 151 40304809</a>
                     </p>
+                    <a
+                        href="https://www.instagram.com/joschi_hamburg/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-3 text-base md:text-lg joschi-item-description text-joschi-green hover:underline"
+                        aria-label="Instagram Profil von joschi_hamburg öffnen"
+                    >
+                        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 md:h-6 md:w-6 fill-none stroke-current" stroke-width="1.8">
+                            <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <circle cx="17.2" cy="6.8" r="1"></circle>
+                        </svg>
+                        <span>joschi_hamburg</span>
+                    </a>
                 </div>
             </section>
 
@@ -313,18 +353,18 @@
 
         <!-- Reservierung Section -->
         <section id="reservierung" class="mt-16 md:mt-20 relative z-10" aria-labelledby="reservierung-heading">
-            <h2 id="reservierung-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">reservierung</h2>
-            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Innen bis 25 Personen · außen bis 8 Personen</p>
+            <h2 id="reservierung-heading" data-i18n="reservation_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">reservierung</h2>
+            <p data-i18n="reservation_intro" class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Innen bis 25 Personen · außen bis 8 Personen</p>
             <form id="reservierungsformular" class="max-w-xl space-y-4" novalidate>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="name" class="block text-sm joschi-item-heading text-joschi-green mb-1">Name</label>
+                        <label for="name" data-i18n="label_name" class="block text-sm joschi-item-heading text-joschi-green mb-1">Name</label>
                         <input type="text" id="name" name="name" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
-                            placeholder="Dein Name">
+                            placeholder="Dein Name" data-i18n-placeholder="placeholder_name">
                     </div>
                     <div>
-                        <label for="personen" class="block text-sm joschi-item-heading text-joschi-green mb-1">Personen</label>
+                        <label for="personen" data-i18n="label_people" class="block text-sm joschi-item-heading text-joschi-green mb-1">Personen</label>
                         <input type="number" id="personen" name="personen" min="1" max="25" value="2" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
                         <p id="personen-hinweis" class="text-xs mt-1 joschi-item-description text-joschi-green/80">Innen bis zu 25 Personen</p>
@@ -332,29 +372,29 @@
                 </div>
                 <div>
                     <fieldset class="border border-joschi-green/20 rounded px-4 py-3">
-                        <legend class="text-sm joschi-item-heading text-joschi-green">Bereich</legend>
+                        <legend data-i18n="label_area" class="text-sm joschi-item-heading text-joschi-green">Bereich</legend>
                         <div class="flex flex-wrap gap-x-6 gap-y-2 mt-1">
                             <label class="inline-flex items-center gap-2 text-sm">
                                 <input type="radio" name="bereich" value="innen" checked
                                     class="h-4 w-4 text-joschi-green border-joschi-green/40 focus:ring-1 focus:ring-joschi-green">
-                                <span class="text-joschi-green">innen (max. 25)</span>
+                                <span class="text-joschi-green" data-i18n="area_inside">innen (max. 25)</span>
                             </label>
                             <label class="inline-flex items-center gap-2 text-sm">
                                 <input type="radio" name="bereich" value="außen"
                                     class="h-4 w-4 text-joschi-green border-joschi-green/40 focus:ring-1 focus:ring-joschi-green">
-                                <span class="text-joschi-green">außen (max. 8)</span>
+                                <span class="text-joschi-green" data-i18n="area_outside">außen (max. 8)</span>
                             </label>
                         </div>
                     </fieldset>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="datum" class="block text-sm joschi-item-heading text-joschi-green mb-1">Datum</label>
+                        <label for="datum" data-i18n="label_date" class="block text-sm joschi-item-heading text-joschi-green mb-1">Datum</label>
                         <input type="date" id="datum" name="datum" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
                     </div>
                     <div>
-                        <label for="uhrzeit" class="block text-sm joschi-item-heading text-joschi-green mb-1">Uhrzeit</label>
+                        <label for="uhrzeit" data-i18n="label_time" class="block text-sm joschi-item-heading text-joschi-green mb-1">Uhrzeit</label>
                         <select id="uhrzeit" name="uhrzeit" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
                             <option value="">-- wählen --</option>
@@ -364,45 +404,45 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="telefon" class="block text-sm joschi-item-heading text-joschi-green mb-1">Telefon</label>
+                        <label for="telefon" data-i18n="label_phone" class="block text-sm joschi-item-heading text-joschi-green mb-1">Telefon</label>
                         <input type="tel" id="telefon" name="telefon" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
                             placeholder="+49 151 12345678">
                     </div>
                     <div>
-                        <label for="email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
+                        <label for="email" data-i18n="label_email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
                         <input type="email" id="email" name="email" required
                             class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
-                            placeholder="deine@email.de">
+                            placeholder="deine@email.de" data-i18n-placeholder="placeholder_email">
                     </div>
                 </div>
                 <div>
-                    <label for="nachricht" class="block text-sm joschi-item-heading text-joschi-green mb-1">Nachricht (optional)</label>
+                    <label for="nachricht" data-i18n="label_message" class="block text-sm joschi-item-heading text-joschi-green mb-1">Nachricht (optional)</label>
                     <textarea id="nachricht" name="nachricht" rows="3"
                         class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50 resize-none"
-                        placeholder="Allergien, Wünsche, etc."></textarea>
+                        placeholder="Allergien, Wünsche, etc." data-i18n-placeholder="placeholder_message"></textarea>
                 </div>
                 <p id="reservierungs-status" class="text-sm joschi-item-description text-joschi-green/90" aria-live="polite"></p>
                 <button type="submit"
-                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green">
+                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green" data-i18n="button_request_reservation">
                     Reservierung anfragen
                 </button>
             </form>
         </section>
 
         <section id="meine-reservierungen" class="mt-16 md:mt-20 relative z-10" aria-labelledby="meine-reservierungen-heading">
-            <h2 id="meine-reservierungen-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">meine reservierungen</h2>
-            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Mit deiner E-Mail-Adresse kannst du bestehende Reservierungen ansehen und als Kalenderdatei herunterladen.</p>
+            <h2 id="meine-reservierungen-heading" data-i18n="my_reservations_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">meine reservierungen</h2>
+            <p data-i18n="my_reservations_intro" class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Mit deiner E-Mail-Adresse kannst du bestehende Reservierungen ansehen und als Kalenderdatei herunterladen.</p>
             <form id="reservierungs-login-formular" class="max-w-xl space-y-4" novalidate>
                 <div>
-                    <label for="reservierungs-login-email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
+                    <label for="reservierungs-login-email" data-i18n="label_email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
                     <input type="email" id="reservierungs-login-email" name="reservierungs-login-email" required
                         class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
-                        placeholder="deine@email.de">
+                        placeholder="deine@email.de" data-i18n-placeholder="placeholder_email">
                 </div>
                 <p id="reservierungs-login-status" class="text-sm joschi-item-description text-joschi-green/90" aria-live="polite"></p>
                 <button type="submit"
-                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green">
+                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green" data-i18n="button_load_reservations">
                     Reservierungen laden
                 </button>
             </form>
@@ -411,23 +451,23 @@
 
         <!-- FAQ Section für Featured Snippets & KI -->
         <section id="faq" class="mt-16 md:mt-20" aria-labelledby="faq-heading">
-            <h2 id="faq-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">Häufige Fragen</h2>
+            <h2 id="faq-heading" data-i18n="faq_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">häufige fragen</h2>
             <dl class="space-y-6">
                 <div>
-                    <dt class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wo befindet sich joschi Pizza Bistro?</dt>
-                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">joschi Pizza Bistro befindet sich in der Seilerstr. 40, 20359 Hamburg, im Stadtteil St. Pauli.</dd>
+                    <dt data-i18n="faq_where_q" class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wo befindet sich joschi Pizza Bistro?</dt>
+                    <dd data-i18n="faq_where_a" class="text-base md:text-lg joschi-item-description text-joschi-green">joschi Pizza Bistro befindet sich in der Seilerstr. 40, 20359 Hamburg, im Stadtteil St. Pauli.</dd>
                 </div>
                 <div>
-                    <dt class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wann hat joschi Pizza Bistro geöffnet?</dt>
-                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">Mittwoch bis Samstag 17–22 Uhr. Zusätzlich Donnerstag und Freitag 12–14 Uhr Mittags.</dd>
+                    <dt data-i18n="faq_hours_q" class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wann hat joschi Pizza Bistro geöffnet?</dt>
+                    <dd data-i18n="faq_hours_a" class="text-base md:text-lg joschi-item-description text-joschi-green">Mittwoch bis Samstag 17–22 Uhr. Zusätzlich Donnerstag und Freitag 12–14 Uhr Mittags.</dd>
                 </div>
                 <div>
-                    <dt class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Hat joschi vegane Pizza?</dt>
-                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">Ja, joschi bietet vegane Pizzen an, z.B. #3 vegan mit Tomate, Basilikum, Olivenöl, frittierten Kapern, frittiertem Knoblauch und Pesto, sowie wechselnde vegane Spezialitäten.</dd>
+                    <dt data-i18n="faq_vegan_q" class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Hat joschi vegane Pizza?</dt>
+                    <dd data-i18n="faq_vegan_a" class="text-base md:text-lg joschi-item-description text-joschi-green">Ja, joschi bietet vegane Pizzen an, z.B. #3 vegan mit Tomate, Basilikum, Olivenöl, frittierten Kapern, frittiertem Knoblauch und Pesto, sowie wechselnde vegane Spezialitäten.</dd>
                 </div>
                 <div>
-                    <dt class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wie kann ich bei joschi reservieren?</dt>
-                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">Nutze das <a href="#reservierung" class="hover:underline">Reservierungsformular</a> auf dieser Seite, oder schreibe per E-Mail an jakob@klapp.pizza bzw. rufe telefonisch unter +49 151 40304809 an.</dd>
+                    <dt data-i18n="faq_reserve_q" class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wie kann ich bei joschi reservieren?</dt>
+                    <dd data-i18n-html="faq_reserve_a" class="text-base md:text-lg joschi-item-description text-joschi-green">Nutze das <a href="#reservierung" class="hover:underline">Reservierungsformular</a> auf dieser Seite, oder schreibe per E-Mail an jakob@klapp.pizza bzw. rufe telefonisch unter +49 151 40304809 an.</dd>
                 </div>
             </dl>
         </section>
@@ -451,6 +491,148 @@
             var loginSubmitButtonEl = loginFormEl ? loginFormEl.querySelector('button[type="submit"]') : null;
             var maxInnen = 25;
             var maxAussen = 8;
+
+            var locale = /^de\b/i.test((navigator.languages && navigator.languages[0]) || navigator.language || 'de') ? 'de' : 'en';
+            var translations = {
+                de: {
+                    menu_heading: 'menü',
+                    contact_heading: 'kontakt',
+                    map_link: '> Karte',
+                    opening_hours_heading: 'Öffnungszeiten',
+                    opening_hours_body: 'Mittwoch–Samstag 17–22 Uhr <br> Donnerstag | Freitag 12–14 Uhr',
+                    booking_heading: 'Buchungsanfragen & Feedback',
+                    reserve_link: '> Reservieren',
+                    reservation_heading: 'reservierung',
+                    reservation_intro: 'Innen bis 25 Personen · außen bis 8 Personen',
+                    label_name: 'Name',
+                    placeholder_name: 'Dein Name',
+                    label_people: 'Personen',
+                    label_area: 'Bereich',
+                    area_inside: 'innen (max. 25)',
+                    area_outside: 'außen (max. 8)',
+                    label_date: 'Datum',
+                    label_time: 'Uhrzeit',
+                    label_phone: 'Telefon',
+                    label_email: 'E-Mail',
+                    placeholder_email: 'deine@email.de',
+                    label_message: 'Nachricht (optional)',
+                    placeholder_message: 'Allergien, Wünsche, etc.',
+                    button_request_reservation: 'Reservierung anfragen',
+                    my_reservations_heading: 'meine reservierungen',
+                    my_reservations_intro: 'Mit deiner E-Mail-Adresse kannst du bestehende Reservierungen ansehen und als Kalenderdatei herunterladen.',
+                    button_load_reservations: 'Reservierungen laden',
+                    faq_heading: 'häufige fragen',
+                    faq_where_q: 'Wo befindet sich joschi Pizza Bistro?',
+                    faq_where_a: 'joschi Pizza Bistro befindet sich in der Seilerstr. 40, 20359 Hamburg, im Stadtteil St. Pauli.',
+                    faq_hours_q: 'Wann hat joschi Pizza Bistro geöffnet?',
+                    faq_hours_a: 'Mittwoch bis Samstag 17–22 Uhr. Zusätzlich Donnerstag und Freitag 12–14 Uhr mittags.',
+                    faq_vegan_q: 'Hat joschi vegane Pizza?',
+                    faq_vegan_a: 'Ja, joschi bietet vegane Pizzen an, z.B. #3 vegan mit Tomate, Basilikum, Olivenöl, frittierten Kapern, frittiertem Knoblauch und Pesto, sowie wechselnde vegane Spezialitäten.',
+                    faq_reserve_q: 'Wie kann ich bei joschi reservieren?',
+                    faq_reserve_a: 'Nutze das <a href="#reservierung" class="hover:underline">Reservierungsformular</a> auf dieser Seite, oder schreibe per E-Mail an jakob@klapp.pizza bzw. rufe telefonisch unter +49 151 40304809 an.',
+                    people_hint_inside: 'Innen bis zu {max} Personen',
+                    people_hint_outside: 'Außen bis zu {max} Personen',
+                    select_default: '-- wählen --',
+                    time_hint_pick_date: 'Bitte zuerst Datum wählen.',
+                    time_hint_no_hours: 'Für dieses Datum sind keine Öffnungszeiten verfügbar.',
+                    time_hint_quarter: 'Auswahl im 15-Minuten-Takt',
+                    form_fill_required: 'Bitte fülle alle Pflichtfelder aus.',
+                    form_people_max: 'Für „{bereich}“ sind maximal {max} Personen möglich.',
+                    form_saving: 'Reservierung wird gespeichert...',
+                    form_saved: 'Danke. Deine Reservierungsanfrage wurde gespeichert.',
+                    form_save_failed: 'Die Reservierung konnte gerade nicht gespeichert werden. Bitte versuche es erneut oder melde dich per E-Mail an jakob@klapp.pizza.',
+                    login_enter_email: 'Bitte gib deine E-Mail-Adresse ein.',
+                    login_loading: 'Reservierungen werden geladen...',
+                    login_loaded: 'Reservierungen geladen.',
+                    login_failed: 'Die Reservierungen konnten gerade nicht geladen werden.',
+                    reservation_none: 'Keine Reservierungen für diese E-Mail-Adresse gefunden.',
+                    reservation_people: 'Personen',
+                    reservation_no_message: 'Keine Nachricht hinterlegt.',
+                    download_ics: 'Kalenderdatei laden',
+                    footer_imprint: 'Impressum'
+                },
+                en: {
+                    menu_heading: 'menu',
+                    contact_heading: 'contact',
+                    map_link: '> Map',
+                    opening_hours_heading: 'opening hours',
+                    opening_hours_body: 'Wednesday–Saturday 5–10 pm <br> Thursday | Friday 12–2 pm',
+                    booking_heading: 'booking requests & feedback',
+                    reserve_link: '> Reserve',
+                    reservation_heading: 'reservation',
+                    reservation_intro: 'Inside up to 25 guests · outside up to 8 guests',
+                    label_name: 'Name',
+                    placeholder_name: 'Your name',
+                    label_people: 'Guests',
+                    label_area: 'Area',
+                    area_inside: 'inside (max. 25)',
+                    area_outside: 'outside (max. 8)',
+                    label_date: 'Date',
+                    label_time: 'Time',
+                    label_phone: 'Phone',
+                    label_email: 'Email',
+                    placeholder_email: 'your@email.com',
+                    label_message: 'Message (optional)',
+                    placeholder_message: 'Allergies, requests, etc.',
+                    button_request_reservation: 'Request reservation',
+                    my_reservations_heading: 'my reservations',
+                    my_reservations_intro: 'Use your email address to view existing reservations and download a calendar file.',
+                    button_load_reservations: 'Load reservations',
+                    faq_heading: 'frequently asked questions',
+                    faq_where_q: 'Where is joschi Pizza Bistro located?',
+                    faq_where_a: 'joschi Pizza Bistro is located at Seilerstr. 40, 20359 Hamburg, in St. Pauli.',
+                    faq_hours_q: 'When is joschi Pizza Bistro open?',
+                    faq_hours_a: 'Wednesday to Saturday 5–10 pm. Additionally Thursday and Friday 12–2 pm.',
+                    faq_vegan_q: 'Does joschi offer vegan pizza?',
+                    faq_vegan_a: 'Yes, joschi offers vegan pizzas, for example #3 vegan with tomato, basil, olive oil, fried capers, fried garlic and pesto, plus rotating vegan specials.',
+                    faq_reserve_q: 'How can I reserve at joschi?',
+                    faq_reserve_a: 'Use the <a href="#reservierung" class="hover:underline">reservation form</a> on this page, or email jakob@klapp.pizza or call +49 151 40304809.',
+                    people_hint_inside: 'Inside up to {max} guests',
+                    people_hint_outside: 'Outside up to {max} guests',
+                    select_default: '-- choose --',
+                    time_hint_pick_date: 'Please choose a date first.',
+                    time_hint_no_hours: 'No opening hours are available for this date.',
+                    time_hint_quarter: 'Selection in 15-minute intervals',
+                    form_fill_required: 'Please complete all required fields.',
+                    form_people_max: 'A maximum of {max} guests is possible for “{bereich}”.',
+                    form_saving: 'Saving reservation...',
+                    form_saved: 'Thanks. Your reservation request has been saved.',
+                    form_save_failed: 'The reservation could not be saved right now. Please try again or contact jakob@klapp.pizza by email.',
+                    login_enter_email: 'Please enter your email address.',
+                    login_loading: 'Loading reservations...',
+                    login_loaded: 'Reservations loaded.',
+                    login_failed: 'Reservations could not be loaded right now.',
+                    reservation_none: 'No reservations were found for this email address.',
+                    reservation_people: 'guests',
+                    reservation_no_message: 'No message provided.',
+                    download_ics: 'Download calendar file',
+                    footer_imprint: 'Legal notice'
+                }
+            };
+
+            function t(key, vars) {
+                var text = (translations[locale] && translations[locale][key]) || translations.de[key] || key;
+                if (!vars) return text;
+                return text.replace(/\{(\w+)\}/g, function(_, name) {
+                    return Object.prototype.hasOwnProperty.call(vars, name) ? vars[name] : '';
+                });
+            }
+
+            function applyTranslations() {
+                document.documentElement.lang = locale;
+                var nodes = document.querySelectorAll('[data-i18n]');
+                for (var i = 0; i < nodes.length; i++) {
+                    nodes[i].textContent = t(nodes[i].getAttribute('data-i18n'));
+                }
+                var htmlNodes = document.querySelectorAll('[data-i18n-html]');
+                for (var j = 0; j < htmlNodes.length; j++) {
+                    htmlNodes[j].innerHTML = t(htmlNodes[j].getAttribute('data-i18n-html'));
+                }
+                var placeholderNodes = document.querySelectorAll('[data-i18n-placeholder]');
+                for (var k = 0; k < placeholderNodes.length; k++) {
+                    placeholderNodes[k].setAttribute('placeholder', t(placeholderNodes[k].getAttribute('data-i18n-placeholder')));
+                }
+            }
 
             function setStatus(msg) {
                 if (!statusEl) return;
@@ -483,8 +665,8 @@
                 var max = getMaxPersonen();
                 personenEl.setAttribute('max', String(max));
                 personenHinweisEl.textContent = (getBereich() === 'außen')
-                    ? 'Außen bis zu ' + max + ' Personen'
-                    : 'Innen bis zu ' + max + ' Personen';
+                    ? t('people_hint_outside', { max: max })
+                    : t('people_hint_inside', { max: max });
 
                 var current = parseInt(personenEl.value, 10);
                 if (!Number.isFinite(current) || current < 1) {
@@ -545,20 +727,20 @@
 
             function rebuildTimeOptions() {
                 var dateStr = datumEl.value;
-                uhrzeitEl.innerHTML = '<option value=\"\">-- wählen --</option>';
+                uhrzeitEl.innerHTML = '<option value=\"\">' + t('select_default') + '</option>';
 
                 if (!dateStr) {
-                    uhrzeitHinweisEl.textContent = 'Bitte zuerst Datum wählen.';
+                    uhrzeitHinweisEl.textContent = t('time_hint_pick_date');
                     return;
                 }
 
                 var times = getOpenTimesForDate(dateStr);
                 if (!times.length) {
-                    uhrzeitHinweisEl.textContent = 'Für dieses Datum sind keine Öffnungszeiten verfügbar.';
+                    uhrzeitHinweisEl.textContent = t('time_hint_no_hours');
                     return;
                 }
 
-                uhrzeitHinweisEl.textContent = 'Auswahl im 15-Minuten-Takt';
+                uhrzeitHinweisEl.textContent = t('time_hint_quarter');
                 for (var i = 0; i < times.length; i++) {
                     var opt = document.createElement('option');
                     opt.value = times[i];
@@ -695,7 +877,7 @@
                 if (!reservations.length) {
                     var emptyEl = document.createElement('p');
                     emptyEl.className = 'text-sm joschi-item-description text-joschi-green/80';
-                    emptyEl.textContent = 'Keine Reservierungen für diese E-Mail-Adresse gefunden.';
+                    emptyEl.textContent = t('reservation_none');
                     reservationListEl.appendChild(emptyEl);
                     return;
                 }
@@ -713,12 +895,12 @@
                         details.className = 'text-sm joschi-item-description text-joschi-green/90';
                         details.textContent =
                             labelBereich(reservation.area) + ' · ' +
-                            reservation.party_size + ' Personen · ' +
+                            reservation.party_size + ' ' + t('reservation_people') + ' · ' +
                             reservation.status;
 
                         var notes = document.createElement('p');
                         notes.className = 'text-sm joschi-item-description text-joschi-green/80 mt-2';
-                        notes.textContent = reservation.notes || 'Keine Nachricht hinterlegt.';
+                        notes.textContent = reservation.notes || t('reservation_no_message');
 
                         var actions = document.createElement('div');
                         actions.className = 'mt-4';
@@ -726,7 +908,7 @@
                         var downloadButton = document.createElement('button');
                         downloadButton.type = 'button';
                         downloadButton.className = 'px-4 py-2 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors text-joschi-green text-sm';
-                        downloadButton.textContent = 'Kalenderdatei laden';
+                        downloadButton.textContent = t('download_ics');
                         downloadButton.addEventListener('click', function() {
                             var timePart = String(reservation.reservation_time).slice(0, 5).replace(':', '');
                             var ics = buildIcsEventFromReservation(reservation);
@@ -744,6 +926,7 @@
             }
 
             // Init: min-date + defaults
+            applyTranslations();
             var today = new Date().toISOString().split('T')[0];
             datumEl.setAttribute('min', today);
 
@@ -777,19 +960,19 @@
                 var bereich = getBereich();
 
                 if (!name || !datum || !uhrzeit || !telefon || !email) {
-                    setStatus('Bitte fülle alle Pflichtfelder aus.');
+                    setStatus(t('form_fill_required'));
                     return;
                 }
 
                 var max = (bereich === 'außen') ? maxAussen : maxInnen;
                 if (!Number.isFinite(personen) || personen < 1 || personen > max) {
-                    setStatus('Für „' + bereich + '“ sind maximal ' + max + ' Personen möglich.');
+                    setStatus(t('form_people_max', { bereich: labelBereich(bereich), max: max }));
                     return;
                 }
 
                 try {
                     setSubmitting(true);
-                    setStatus('Reservierung wird gespeichert...');
+                    setStatus(t('form_saving'));
 
                     await postJson('/api/reservations', {
                         guest_name: name,
@@ -803,10 +986,10 @@
                     });
 
                     resetReservationForm();
-                    setStatus('Danke. Deine Reservierungsanfrage wurde gespeichert.');
+                    setStatus(t('form_saved'));
                 } catch (err) {
                     console.error(err);
-                    setStatus('Die Reservierung konnte gerade nicht gespeichert werden. Bitte versuche es erneut oder melde dich per E-Mail an jakob@klapp.pizza.');
+                    setStatus(t('form_save_failed'));
                 } finally {
                     setSubmitting(false);
                 }
@@ -819,23 +1002,23 @@
 
                 var loginEmail = loginEmailEl.value.trim().toLowerCase();
                 if (!loginEmail) {
-                    setLoginStatus('Bitte gib deine E-Mail-Adresse ein.');
+                    setLoginStatus(t('login_enter_email'));
                     return;
                 }
 
                 try {
                     setLoginSubmitting(true);
-                    setLoginStatus('Reservierungen werden geladen...');
+                    setLoginStatus(t('login_loading'));
 
                     var result = await postJson('/api/reservations/lookup', {
                         email: loginEmail
                     });
 
                     renderReservations(result.reservations || []);
-                    setLoginStatus('Reservierungen geladen.');
+                    setLoginStatus(t('login_loaded'));
                 } catch (err) {
                     console.error(err);
-                    setLoginStatus('Die Reservierungen konnten gerade nicht geladen werden.');
+                    setLoginStatus(t('login_failed'));
                 } finally {
                     setLoginSubmitting(false);
                 }
@@ -845,7 +1028,7 @@
     <footer class="mt-16 pt-8 border-t border-joschi-green/20 relative z-50" role="contentinfo">
         <div class="flex flex-col items-center space-y-2">
             <p class="text-gray-400 joschi-item-footer">made with love ❤️ by <a href="https://klapp.pizza" class="hover:underline relative z-50">klapp.pizza</a> in 2025</p>
-            <a href="impressum.html" class="text-joschi-green hover:underline joschi-item-footer relative z-50">Impressum</a>
+            <a href="impressum.html" data-i18n="footer_imprint" class="text-joschi-green hover:underline joschi-item-footer relative z-50">Impressum</a>
         </div>
     </footer>
 </body>
