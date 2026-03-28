@@ -50,14 +50,12 @@ module.exports = async function handler(req, res) {
       return sendJson(res, 400, { error: `Max party size for ${payload.area} is ${maxPartySize}` });
     }
 
-    const data = await supabaseFetch('joschi.reservations', {
+    const data = await supabaseFetch('rpc/create_reservation', {
       method: 'POST',
       body: JSON.stringify(payload)
     });
 
-    return sendJson(res, 201, {
-      reservation: Array.isArray(data) ? data[0] : data
-    });
+    return sendJson(res, 201, { reservation: data });
   } catch (error) {
     console.error(error);
     return sendJson(res, error.status || 500, {

@@ -9,16 +9,28 @@ function assertEnv() {
 
 async function supabaseFetch(path, options = {}) {
   assertEnv();
+  const schema = options.schema || 'public';
+  const headers = {
+    apikey: SERVICE_ROLE_KEY,
+    Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
+    'Content-Type': 'application/json',
+    Prefer: 'return=representation',
+    ...options.headers
+  };
+
+  delete options.schema;
+  delete options.headers;
+
+  if (path.startsWith('rpc/')) {
+    headers['Content-Profile'] = schema;
+  } else {
+    headers['Accept-Profile'] = schema;
+    headers['Content-Profile'] = schema;
+  }
 
   const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     ...options,
-    headers: {
-      apikey: SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'return=representation',
-      ...options.headers
-    }
+    headers
   });
 
   const text = await response.text();
