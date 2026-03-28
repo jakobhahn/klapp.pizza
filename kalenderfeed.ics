@@ -1,0 +1,32 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//klapp.pizza//Kalenderfeed//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:joschi Pizza Bistro - Öffnungszeiten
+X-WR-TIMEZONE:Europe/Berlin
+
+BEGIN:VEVENT
+UID:klapp-open-evening@klapp.pizza
+DTSTAMP:20260319T000000Z
+DTSTART;TZID=Europe/Berlin:20260318T170000
+DTEND;TZID=Europe/Berlin:20260318T220000
+RRULE:FREQ=WEEKLY;BYDAY=WE,TH,FR,SA
+SUMMARY:joschi geöffnet (Abend)
+DESCRIPTION:Öffnungszeiten (Startzeiten der Reservierungen im 15-Minuten-Takt innerhalb dieser Zeiten).
+LOCATION:Seilerstr. 40, 20359 Hamburg
+END:VEVENT
+
+BEGIN:VEVENT
+UID:klapp-open-midday@klapp.pizza
+DTSTAMP:20260319T000000Z
+DTSTART;TZID=Europe/Berlin:20260319T120000
+DTEND;TZID=Europe/Berlin:20260319T140000
+RRULE:FREQ=WEEKLY;BYDAY=TH,FR
+SUMMARY:joschi geöffnet (Mittag)
+DESCRIPTION:Öffnungszeiten (Startzeiten der Reservierungen im 15-Minuten-Takt innerhalb dieser Zeiten).
+LOCATION:Seilerstr. 40, 20359 Hamburg
+END:VEVENT
+
+END:VCALENDAR
+
