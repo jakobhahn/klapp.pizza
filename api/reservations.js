@@ -1,4 +1,5 @@
 const { readJsonBody, sendJson, supabaseFetch } = require('./_supabase');
+const { hasMailConfig, sendReservationRequestEmails } = require('./_mailer');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -49,7 +50,19 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify(payload)
     });
 
-    return sendJson(res, 201, { reservation: data });
+    let mailWarning = null;
+    if (hasMailConfig()) {
+      try {
+        await sendReservationRequestEmails(data);
+      } catch (mailError) {
+        console.error(mailError);
+        mailWarning = 'Reservation saved, but notification emails failed';
+      }
+    } else {
+      mailWarning = 'Reservation saved, but SMTP is not configured';
+    }
+
+    return sendJson(res, 201, { reservation: data, mailWarning });
   } catch (error) {
     console.error(error);
     return sendJson(res, error.status || 500, {
