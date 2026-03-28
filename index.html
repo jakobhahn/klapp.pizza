@@ -168,7 +168,7 @@
               "name": "Wie kann ich bei joschi reservieren?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Buchungsanfragen per E-Mail an jakob@klapp.pizza oder telefonisch unter +49 151 40304809."
+                "text": "Nutze das Reservierungsformular auf der Website, oder schreibe per E-Mail an jakob@klapp.pizza bzw. rufe telefonisch unter +49 151 40304809 an."
               }
             }
           ]
@@ -274,6 +274,7 @@
                     <br>
                     <h3 class="text-xl md:text-2xl joschi-item-heading text-joschi-green">Buchungsanfragen & Feedback</h3>
                     <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">
+                        <a href="#reservierung" class="hover:underline">> Reservieren</a><br>
                         <a href="mailto:jakob@klapp.pizza" class="hover:underline">jakob@klapp.pizza</a><br>
                         <a href="tel:+4915140304809" class="hover:underline">+49 151 40304809</a>
                     </p>
@@ -281,6 +282,89 @@
             </section>
 
         </main>
+
+        <!-- Reservierung Section -->
+        <section id="reservierung" class="mt-16 md:mt-20 relative z-10" aria-labelledby="reservierung-heading">
+            <h2 id="reservierung-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">reservierung</h2>
+            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Innen bis 25 Personen · außen bis 8 Personen · immer im 15-Minuten-Takt</p>
+            <p class="text-xs md:text-sm joschi-item-description text-joschi-green/90 mb-6">
+                Kalenderfeed abonnieren (ICS):
+                <a href="kalenderfeed.ics" class="hover:underline">kalenderfeed.ics</a>
+            </p>
+            <form id="reservierungsformular" class="max-w-xl space-y-4" novalidate>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="name" class="block text-sm joschi-item-heading text-joschi-green mb-1">Name</label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
+                            placeholder="Dein Name">
+                    </div>
+                    <div>
+                        <label for="personen" class="block text-sm joschi-item-heading text-joschi-green mb-1">Personen</label>
+                        <input type="number" id="personen" name="personen" min="1" max="25" value="2" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
+                        <p id="personen-hinweis" class="text-xs mt-1 joschi-item-description text-joschi-green/80">Innen bis zu 25 Personen</p>
+                    </div>
+                </div>
+                <div>
+                    <fieldset class="border border-joschi-green/20 rounded px-4 py-3">
+                        <legend class="text-sm joschi-item-heading text-joschi-green">Bereich</legend>
+                        <div class="flex flex-wrap gap-x-6 gap-y-2 mt-1">
+                            <label class="inline-flex items-center gap-2 text-sm">
+                                <input type="radio" name="bereich" value="innen" checked
+                                    class="h-4 w-4 text-joschi-green border-joschi-green/40 focus:ring-1 focus:ring-joschi-green">
+                                <span class="text-joschi-green">innen (max. 25)</span>
+                            </label>
+                            <label class="inline-flex items-center gap-2 text-sm">
+                                <input type="radio" name="bereich" value="außen"
+                                    class="h-4 w-4 text-joschi-green border-joschi-green/40 focus:ring-1 focus:ring-joschi-green">
+                                <span class="text-joschi-green">außen (max. 8)</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="datum" class="block text-sm joschi-item-heading text-joschi-green mb-1">Datum</label>
+                        <input type="date" id="datum" name="datum" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
+                    </div>
+                    <div>
+                        <label for="uhrzeit" class="block text-sm joschi-item-heading text-joschi-green mb-1">Uhrzeit</label>
+                        <select id="uhrzeit" name="uhrzeit" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green">
+                            <option value="">-- wählen --</option>
+                        </select>
+                        <p id="uhrzeit-hinweis" class="text-xs mt-1 joschi-item-description text-joschi-green/80">Bitte zuerst Datum wählen.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="telefon" class="block text-sm joschi-item-heading text-joschi-green mb-1">Telefon</label>
+                        <input type="tel" id="telefon" name="telefon" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
+                            placeholder="+49 151 12345678">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
+                            placeholder="deine@email.de">
+                    </div>
+                </div>
+                <div>
+                    <label for="nachricht" class="block text-sm joschi-item-heading text-joschi-green mb-1">Nachricht (optional)</label>
+                    <textarea id="nachricht" name="nachricht" rows="3"
+                        class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50 resize-none"
+                        placeholder="Allergien, Wünsche, etc."></textarea>
+                </div>
+                <p id="reservierungs-status" class="text-sm joschi-item-description text-joschi-green/90" aria-live="polite"></p>
+                <button type="submit"
+                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green">
+                    Reservierung anfragen
+                </button>
+            </form>
+        </section>
 
         <!-- FAQ Section für Featured Snippets & KI -->
         <section id="faq" class="mt-16 md:mt-20" aria-labelledby="faq-heading">
@@ -300,13 +384,302 @@
                 </div>
                 <div>
                     <dt class="text-xl md:text-2xl joschi-item-heading text-joschi-green mb-2">Wie kann ich bei joschi reservieren?</dt>
-                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">Buchungsanfragen per E-Mail an jakob@klapp.pizza oder telefonisch unter +49 151 40304809.</dd>
+                    <dd class="text-base md:text-lg joschi-item-description text-joschi-green">Nutze das <a href="#reservierung" class="hover:underline">Reservierungsformular</a> auf dieser Seite, oder schreibe per E-Mail an jakob@klapp.pizza bzw. rufe telefonisch unter +49 151 40304809 an.</dd>
                 </div>
             </dl>
         </section>
 
         <br><br><br><br><br><br>
     </div>
+    <script>
+        (function() {
+            var datumEl = document.getElementById('datum');
+            var uhrzeitEl = document.getElementById('uhrzeit');
+            var uhrzeitHinweisEl = document.getElementById('uhrzeit-hinweis');
+            var personenEl = document.getElementById('personen');
+            var personenHinweisEl = document.getElementById('personen-hinweis');
+            var statusEl = document.getElementById('reservierungs-status');
+
+            var maxInnen = 25;
+            var maxAussen = 8;
+
+            function setStatus(msg) {
+                if (!statusEl) return;
+                statusEl.textContent = msg || '';
+            }
+
+            function getBereich() {
+                var checked = document.querySelector('input[name="bereich"]:checked');
+                return checked ? checked.value : 'innen';
+            }
+
+            function getMaxPersonen() {
+                return getBereich() === 'außen' ? maxAussen : maxInnen;
+            }
+
+            function updatePersonenMax() {
+                var max = getMaxPersonen();
+                personenEl.setAttribute('max', String(max));
+                personenHinweisEl.textContent = (getBereich() === 'außen')
+                    ? 'Außen bis zu ' + max + ' Personen'
+                    : 'Innen bis zu ' + max + ' Personen';
+
+                var current = parseInt(personenEl.value, 10);
+                if (!Number.isFinite(current) || current < 1) {
+                    personenEl.value = '1';
+                } else if (current > max) {
+                    personenEl.value = String(max);
+                }
+            }
+
+            function pad2(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            function timeToMinutes(t) {
+                var parts = t.split(':');
+                return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+            }
+
+            function formatTimeFromMinutes(total) {
+                var h = Math.floor(total / 60);
+                var m = total % 60;
+                return pad2(h) + ':' + pad2(m);
+            }
+
+            function generateQuarterTimes(startMinutesInclusive, endMinutesExclusive) {
+                // quarter-hour slots: [start, end)
+                var times = [];
+                for (var t = startMinutesInclusive; t < endMinutesExclusive; t += 15) {
+                    times.push(formatTimeFromMinutes(t));
+                }
+                return times;
+            }
+
+            function getOpenTimesForDate(dateStr) {
+                // dateStr: YYYY-MM-DD
+                var parts = dateStr.split('-').map(Number);
+                var y = parts[0], m = parts[1] - 1, d = parts[2];
+                var dt = new Date(y, m, d);
+                // JS: 0=Sun ... 3=Wed ... 6=Sat
+                var day = dt.getDay();
+
+                var times = [];
+
+                // Wed-Sat: 17:00-22:00
+                if (day >= 3 && day <= 6) {
+                    times = times.concat(generateQuarterTimes(17 * 60, 22 * 60));
+                }
+
+                // Thu-Fri (also): 12:00-14:00
+                if (day === 4 || day === 5) {
+                    times = times.concat(generateQuarterTimes(12 * 60, 14 * 60));
+                }
+
+                // Sort times ascending
+                times.sort(function(a, b) { return timeToMinutes(a) - timeToMinutes(b); });
+                return times;
+            }
+
+            function rebuildTimeOptions() {
+                var dateStr = datumEl.value;
+                uhrzeitEl.innerHTML = '<option value=\"\">-- wählen --</option>';
+
+                if (!dateStr) {
+                    uhrzeitHinweisEl.textContent = 'Bitte zuerst Datum wählen.';
+                    return;
+                }
+
+                var times = getOpenTimesForDate(dateStr);
+                if (!times.length) {
+                    uhrzeitHinweisEl.textContent = 'Für dieses Datum sind keine Öffnungszeiten verfügbar.';
+                    return;
+                }
+
+                uhrzeitHinweisEl.textContent = 'Auswahl im 15-Minuten-Takt';
+                for (var i = 0; i < times.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.value = times[i];
+                    opt.textContent = times[i];
+                    uhrzeitEl.appendChild(opt);
+                }
+            }
+
+            function pad2(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            function icsEscape(text) {
+                // RFC 5545: escape backslash, newlines, commas, semicolons
+                return String(text || '')
+                    .replace(/\\/g, '\\\\')
+                    .replace(/\r\n/g, '\n')
+                    .replace(/\n/g, '\\n')
+                    .replace(/,/g, '\\,')
+                    .replace(/;/g, '\\;');
+            }
+
+            function downloadIcs(filename, icsText) {
+                var blob = new Blob([icsText], { type: 'text/calendar;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(function() { URL.revokeObjectURL(url); }, 500);
+            }
+
+            function buildIcsEvent(opts) {
+                var tzid = 'Europe/Berlin';
+                var durationMin = 15; // Match the 15-minute slots
+
+                var dateStr = opts.date; // YYYY-MM-DD
+                var timeStr = opts.time; // HH:MM
+
+                function addMinutes(dateStrInner, timeStrInner, mins) {
+                    // Interpret the picked date/time as the user's local time.
+                    // Most users will be in Europe/Berlin anyway.
+                    var d = new Date(dateStrInner + 'T' + timeStrInner + ':00');
+                    d.setMinutes(d.getMinutes() + mins);
+                    var y = d.getFullYear();
+                    var m = pad2(d.getMonth() + 1);
+                    var day = pad2(d.getDate());
+                    var hh = pad2(d.getHours());
+                    var mm = pad2(d.getMinutes());
+                    return {
+                        date: y + '-' + m + '-' + day,
+                        time: hh + ':' + mm
+                    };
+                }
+
+                var end = addMinutes(dateStr, timeStr, durationMin);
+
+                var startIcs = dateStr.replace(/-/g, '') + 'T' + timeStr.replace(':', '') + '00';
+                var endIcs = end.date.replace(/-/g, '') + 'T' + end.time.replace(':', '') + '00';
+
+                var dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+                var uid = 'klapp.pizza-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '@klapp.pizza';
+
+                var areaLabel = (opts.area === 'außen') ? 'außen' : 'innen';
+                var summary = 'Tischreservierung (' + areaLabel + ')';
+                var description =
+                    'Reservierungsanfrage bei joschi Pizza Bistro' + '\n' +
+                    'Name: ' + opts.name + '\n' +
+                    'Bereich: ' + areaLabel + '\n' +
+                    'Personen: ' + opts.personen + '\n' +
+                    'Datum: ' + opts.date + '\n' +
+                    'Uhrzeit: ' + opts.time + '\n' +
+                    'Telefon: ' + opts.telefon + '\n' +
+                    'E-Mail: ' + opts.email +
+                    (opts.nachricht ? '\n\nNachricht: ' + opts.nachricht : '');
+
+                var location =
+                    'joschi Pizza Bistro, Seilerstr. 40, 20359 Hamburg';
+
+                return [
+                    'BEGIN:VCALENDAR',
+                    'VERSION:2.0',
+                    'PRODID:-//klapp.pizza//Reservierung//DE',
+                    'CALSCALE:GREGORIAN',
+                    'METHOD:PUBLISH',
+                    'BEGIN:VEVENT',
+                    'UID:' + uid,
+                    'DTSTAMP:' + dtstamp,
+                    'DTSTART;TZID=' + tzid + ':' + startIcs,
+                    'DTEND;TZID=' + tzid + ':' + endIcs,
+                    'SUMMARY:' + icsEscape(summary),
+                    'DESCRIPTION:' + icsEscape(description),
+                    'LOCATION:' + icsEscape(location),
+                    'END:VEVENT',
+                    'END:VCALENDAR'
+                ].join('\r\n');
+            }
+
+            // Init: min-date + defaults
+            var today = new Date().toISOString().split('T')[0];
+            datumEl.setAttribute('min', today);
+
+            updatePersonenMax();
+            rebuildTimeOptions();
+
+            // Events
+            var bereichInputs = document.querySelectorAll('input[name="bereich"]');
+            for (var b = 0; b < bereichInputs.length; b++) {
+                bereichInputs[b].addEventListener('change', function() {
+                    updatePersonenMax();
+                    setStatus('');
+                });
+            }
+            datumEl.addEventListener('change', function() {
+                rebuildTimeOptions();
+                setStatus('');
+            });
+
+            document.getElementById('reservierungsformular').addEventListener('submit', function(e) {
+                e.preventDefault();
+                setStatus('');
+
+                var name = document.getElementById('name').value.trim();
+                var personen = parseInt(document.getElementById('personen').value, 10);
+                var datum = datumEl.value;
+                var uhrzeit = uhrzeitEl.value;
+                var telefon = document.getElementById('telefon').value.trim();
+                var email = document.getElementById('email').value.trim();
+                var nachricht = document.getElementById('nachricht').value.trim();
+                var bereich = getBereich();
+
+                if (!name || !datum || !uhrzeit || !telefon || !email) {
+                    setStatus('Bitte fülle alle Pflichtfelder aus.');
+                    return;
+                }
+
+                var max = (bereich === 'außen') ? maxAussen : maxInnen;
+                if (!Number.isFinite(personen) || personen < 1 || personen > max) {
+                    setStatus('Für „' + bereich + '“ sind maximal ' + max + ' Personen möglich.');
+                    return;
+                }
+
+                // 1) Create a downloadable calendar entry for the customer.
+                setStatus('ICS wird erstellt...');
+                try {
+                    var icsText = buildIcsEvent({
+                        name: name,
+                        area: bereich,
+                        personen: personen,
+                        date: datum,
+                        time: uhrzeit,
+                        telefon: telefon,
+                        email: email,
+                        nachricht: nachricht
+                    });
+                    var safeTime = uhrzeit.replace(':', '');
+                    var safeArea = (bereich === 'außen') ? 'aussen' : 'innen';
+                    var filename = 'reservierung_' + datum + '_' + safeTime + '_' + safeArea + '.ics';
+                    downloadIcs(filename, icsText);
+                } catch (err) {
+                    // Even if the download fails, still open the mailto link.
+                    console.error(err);
+                }
+
+                var subject = encodeURIComponent('Reservierung ' + datum + ' ' + uhrzeit + ' (' + bereich + ') – ' + name);
+                var body = encodeURIComponent(
+                    'Hallo,\n\nich möchte einen Tisch reservieren:\n\n' +
+                    'Name: ' + name + '\n' +
+                    'Bereich: ' + (bereich === 'außen' ? 'außen' : 'innen') + '\n' +
+                    'Personen: ' + personen + '\n' +
+                    'Datum: ' + datum + '\n' +
+                    'Uhrzeit: ' + uhrzeit + '\n' +
+                    'Telefon: ' + telefon + '\n' +
+                    'E-Mail: ' + email +
+                    (nachricht ? '\n\nNachricht: ' + nachricht : '') +
+                    '\n\nVielen Dank!'
+                );
+                window.location.href = 'mailto:jakob@klapp.pizza?subject=' + subject + '&body=' + body;
+            });
+        })();
+    </script>
     <footer class="mt-16 pt-8 border-t border-joschi-green/20 relative z-50" role="contentinfo">
         <div class="flex flex-col items-center space-y-2">
             <p class="text-gray-400 joschi-item-footer">made with love ❤️ by <a href="https://klapp.pizza" class="hover:underline relative z-50">klapp.pizza</a> in 2025</p>
