@@ -286,11 +286,7 @@
         <!-- Reservierung Section -->
         <section id="reservierung" class="mt-16 md:mt-20 relative z-10" aria-labelledby="reservierung-heading">
             <h2 id="reservierung-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">reservierung</h2>
-            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Innen bis 25 Personen · außen bis 8 Personen · immer im 15-Minuten-Takt</p>
-            <p class="text-xs md:text-sm joschi-item-description text-joschi-green/90 mb-6">
-                Kalenderfeed abonnieren (ICS):
-                <a href="kalenderfeed.ics" class="hover:underline">kalenderfeed.ics</a>
-            </p>
+            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Innen bis 25 Personen · außen bis 8 Personen</p>
             <form id="reservierungsformular" class="max-w-xl space-y-4" novalidate>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -366,6 +362,25 @@
             </form>
         </section>
 
+        <section id="meine-reservierungen" class="mt-16 md:mt-20 relative z-10" aria-labelledby="meine-reservierungen-heading">
+            <h2 id="meine-reservierungen-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">meine reservierungen</h2>
+            <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-6">Mit deiner E-Mail-Adresse kannst du bestehende Reservierungen ansehen und als Kalenderdatei herunterladen.</p>
+            <form id="reservierungs-login-formular" class="max-w-xl space-y-4" novalidate>
+                <div>
+                    <label for="reservierungs-login-email" class="block text-sm joschi-item-heading text-joschi-green mb-1">E-Mail</label>
+                    <input type="email" id="reservierungs-login-email" name="reservierungs-login-email" required
+                        class="w-full px-4 py-2 border border-joschi-green/40 rounded focus:outline-none focus:ring-1 focus:ring-joschi-green focus:border-joschi-green bg-white text-joschi-green placeholder-joschi-green/50"
+                        placeholder="deine@email.de">
+                </div>
+                <p id="reservierungs-login-status" class="text-sm joschi-item-description text-joschi-green/90" aria-live="polite"></p>
+                <button type="submit"
+                    class="w-full sm:w-auto px-8 py-3 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors font-medium text-joschi-green">
+                    Reservierungen laden
+                </button>
+            </form>
+            <div id="reservierungs-liste" class="mt-8 grid gap-4"></div>
+        </section>
+
         <!-- FAQ Section für Featured Snippets & KI -->
         <section id="faq" class="mt-16 md:mt-20" aria-labelledby="faq-heading">
             <h2 id="faq-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">Häufige Fragen</h2>
@@ -393,13 +408,19 @@
     </div>
     <script>
         (function() {
+            var formEl = document.getElementById('reservierungsformular');
+            var loginFormEl = document.getElementById('reservierungs-login-formular');
             var datumEl = document.getElementById('datum');
             var uhrzeitEl = document.getElementById('uhrzeit');
             var uhrzeitHinweisEl = document.getElementById('uhrzeit-hinweis');
             var personenEl = document.getElementById('personen');
             var personenHinweisEl = document.getElementById('personen-hinweis');
             var statusEl = document.getElementById('reservierungs-status');
-
+            var loginStatusEl = document.getElementById('reservierungs-login-status');
+            var loginEmailEl = document.getElementById('reservierungs-login-email');
+            var reservationListEl = document.getElementById('reservierungs-liste');
+            var submitButtonEl = formEl ? formEl.querySelector('button[type="submit"]') : null;
+            var loginSubmitButtonEl = loginFormEl ? loginFormEl.querySelector('button[type="submit"]') : null;
             var maxInnen = 25;
             var maxAussen = 8;
 
@@ -408,9 +429,22 @@
                 statusEl.textContent = msg || '';
             }
 
+            function setLoginStatus(msg) {
+                if (!loginStatusEl) return;
+                loginStatusEl.textContent = msg || '';
+            }
+
             function getBereich() {
                 var checked = document.querySelector('input[name="bereich"]:checked');
                 return checked ? checked.value : 'innen';
+            }
+
+            function normalizeBereichForDb(value) {
+                return value === 'außen' ? 'aussen' : 'innen';
+            }
+
+            function labelBereich(value) {
+                return value === 'aussen' || value === 'außen' ? 'außen' : 'innen';
             }
 
             function getMaxPersonen() {
@@ -505,12 +539,53 @@
                 }
             }
 
-            function pad2(n) {
-                return String(n).padStart(2, '0');
+            function setSubmitting(isSubmitting) {
+                if (!submitButtonEl) return;
+                submitButtonEl.disabled = isSubmitting;
+                submitButtonEl.setAttribute('aria-busy', isSubmitting ? 'true' : 'false');
+                submitButtonEl.classList.toggle('opacity-60', isSubmitting);
+                submitButtonEl.classList.toggle('cursor-not-allowed', isSubmitting);
+            }
+
+            function setLoginSubmitting(isSubmitting) {
+                if (!loginSubmitButtonEl) return;
+                loginSubmitButtonEl.disabled = isSubmitting;
+                loginSubmitButtonEl.setAttribute('aria-busy', isSubmitting ? 'true' : 'false');
+                loginSubmitButtonEl.classList.toggle('opacity-60', isSubmitting);
+                loginSubmitButtonEl.classList.toggle('cursor-not-allowed', isSubmitting);
+            }
+
+            async function postJson(url, payload) {
+                var response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                var data = null;
+                try {
+                    data = await response.json();
+                } catch (err) {
+                    data = null;
+                }
+
+                if (!response.ok) {
+                    var message = data && data.error ? data.error : 'Request failed';
+                    throw new Error(message);
+                }
+
+                return data;
+            }
+
+            function resetReservationForm() {
+                formEl.reset();
+                updatePersonenMax();
+                rebuildTimeOptions();
             }
 
             function icsEscape(text) {
-                // RFC 5545: escape backslash, newlines, commas, semicolons
                 return String(text || '')
                     .replace(/\\/g, '\\\\')
                     .replace(/\r\n/g, '\n')
@@ -531,16 +606,13 @@
                 setTimeout(function() { URL.revokeObjectURL(url); }, 500);
             }
 
-            function buildIcsEvent(opts) {
+            function buildIcsEventFromReservation(reservation) {
                 var tzid = 'Europe/Berlin';
-                var durationMin = 15; // Match the 15-minute slots
-
-                var dateStr = opts.date; // YYYY-MM-DD
-                var timeStr = opts.time; // HH:MM
+                var durationMin = 15;
+                var dateStr = reservation.reservation_date;
+                var timeStr = String(reservation.reservation_time || '').slice(0, 5);
 
                 function addMinutes(dateStrInner, timeStrInner, mins) {
-                    // Interpret the picked date/time as the user's local time.
-                    // Most users will be in Europe/Berlin anyway.
                     var d = new Date(dateStrInner + 'T' + timeStrInner + ':00');
                     d.setMinutes(d.getMinutes() + mins);
                     var y = d.getFullYear();
@@ -555,28 +627,20 @@
                 }
 
                 var end = addMinutes(dateStr, timeStr, durationMin);
-
                 var startIcs = dateStr.replace(/-/g, '') + 'T' + timeStr.replace(':', '') + '00';
                 var endIcs = end.date.replace(/-/g, '') + 'T' + end.time.replace(':', '') + '00';
-
                 var dtstamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
-                var uid = 'klapp.pizza-' + Date.now() + '-' + Math.random().toString(16).slice(2) + '@klapp.pizza';
-
-                var areaLabel = (opts.area === 'außen') ? 'außen' : 'innen';
-                var summary = 'Tischreservierung (' + areaLabel + ')';
+                var uid = 'klapp.pizza-reservation-' + reservation.id + '@klapp.pizza';
+                var areaLabel = labelBereich(reservation.area);
                 var description =
-                    'Reservierungsanfrage bei joschi Pizza Bistro' + '\n' +
-                    'Name: ' + opts.name + '\n' +
+                    'Reservierung bei joschi Pizza Bistro' + '\n' +
+                    'Name: ' + reservation.guest_name + '\n' +
                     'Bereich: ' + areaLabel + '\n' +
-                    'Personen: ' + opts.personen + '\n' +
-                    'Datum: ' + opts.date + '\n' +
-                    'Uhrzeit: ' + opts.time + '\n' +
-                    'Telefon: ' + opts.telefon + '\n' +
-                    'E-Mail: ' + opts.email +
-                    (opts.nachricht ? '\n\nNachricht: ' + opts.nachricht : '');
-
-                var location =
-                    'joschi Pizza Bistro, Seilerstr. 40, 20359 Hamburg';
+                    'Personen: ' + reservation.party_size + '\n' +
+                    'Datum: ' + reservation.reservation_date + '\n' +
+                    'Uhrzeit: ' + timeStr + '\n' +
+                    'Status: ' + reservation.status +
+                    (reservation.notes ? '\n\nNachricht: ' + reservation.notes : '');
 
                 return [
                     'BEGIN:VCALENDAR',
@@ -589,12 +653,66 @@
                     'DTSTAMP:' + dtstamp,
                     'DTSTART;TZID=' + tzid + ':' + startIcs,
                     'DTEND;TZID=' + tzid + ':' + endIcs,
-                    'SUMMARY:' + icsEscape(summary),
+                    'SUMMARY:' + icsEscape('Tischreservierung (' + areaLabel + ')'),
                     'DESCRIPTION:' + icsEscape(description),
-                    'LOCATION:' + icsEscape(location),
+                    'LOCATION:' + icsEscape('joschi Pizza Bistro, Seilerstr. 40, 20359 Hamburg'),
                     'END:VEVENT',
                     'END:VCALENDAR'
                 ].join('\r\n');
+            }
+
+            function renderReservations(reservations) {
+                reservationListEl.innerHTML = '';
+
+                if (!reservations.length) {
+                    var emptyEl = document.createElement('p');
+                    emptyEl.className = 'text-sm joschi-item-description text-joschi-green/80';
+                    emptyEl.textContent = 'Keine Reservierungen für diese E-Mail-Adresse gefunden.';
+                    reservationListEl.appendChild(emptyEl);
+                    return;
+                }
+
+                for (var i = 0; i < reservations.length; i++) {
+                    (function(reservation) {
+                        var card = document.createElement('article');
+                        card.className = 'border border-joschi-green/20 rounded p-4 bg-white/70';
+
+                        var title = document.createElement('h3');
+                        title.className = 'text-xl joschi-item-heading text-joschi-green mb-2';
+                        title.textContent = reservation.reservation_date + ' · ' + String(reservation.reservation_time).slice(0, 5);
+
+                        var details = document.createElement('p');
+                        details.className = 'text-sm joschi-item-description text-joschi-green/90';
+                        details.textContent =
+                            labelBereich(reservation.area) + ' · ' +
+                            reservation.party_size + ' Personen · ' +
+                            reservation.status;
+
+                        var notes = document.createElement('p');
+                        notes.className = 'text-sm joschi-item-description text-joschi-green/80 mt-2';
+                        notes.textContent = reservation.notes || 'Keine Nachricht hinterlegt.';
+
+                        var actions = document.createElement('div');
+                        actions.className = 'mt-4';
+
+                        var downloadButton = document.createElement('button');
+                        downloadButton.type = 'button';
+                        downloadButton.className = 'px-4 py-2 border border-joschi-green/40 rounded hover:bg-joschi-green/10 transition-colors text-joschi-green text-sm';
+                        downloadButton.textContent = 'Kalenderdatei laden';
+                        downloadButton.addEventListener('click', function() {
+                            var timePart = String(reservation.reservation_time).slice(0, 5).replace(':', '');
+                            var ics = buildIcsEventFromReservation(reservation);
+                            downloadIcs('reservierung_' + reservation.reservation_date + '_' + timePart + '_' + reservation.area + '.ics', ics);
+                        });
+
+                        actions.appendChild(downloadButton);
+                        card.appendChild(title);
+                        card.appendChild(details);
+                        card.appendChild(notes);
+                        card.appendChild(actions);
+                        reservationListEl.appendChild(card);
+                    })(reservations[i]);
+                }
             }
 
             // Init: min-date + defaults
@@ -617,7 +735,7 @@
                 setStatus('');
             });
 
-            document.getElementById('reservierungsformular').addEventListener('submit', function(e) {
+            formEl.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 setStatus('');
 
@@ -641,42 +759,58 @@
                     return;
                 }
 
-                // 1) Create a downloadable calendar entry for the customer.
-                setStatus('ICS wird erstellt...');
                 try {
-                    var icsText = buildIcsEvent({
-                        name: name,
-                        area: bereich,
-                        personen: personen,
-                        date: datum,
-                        time: uhrzeit,
-                        telefon: telefon,
-                        email: email,
-                        nachricht: nachricht
+                    setSubmitting(true);
+                    setStatus('Reservierung wird gespeichert...');
+
+                    await postJson('/api/reservations', {
+                        guest_name: name,
+                        guest_phone: telefon,
+                        guest_email: email.toLowerCase(),
+                        party_size: personen,
+                        area: normalizeBereichForDb(bereich),
+                        reservation_date: datum,
+                        reservation_time: uhrzeit + ':00',
+                        notes: nachricht
                     });
-                    var safeTime = uhrzeit.replace(':', '');
-                    var safeArea = (bereich === 'außen') ? 'aussen' : 'innen';
-                    var filename = 'reservierung_' + datum + '_' + safeTime + '_' + safeArea + '.ics';
-                    downloadIcs(filename, icsText);
+
+                    resetReservationForm();
+                    setStatus('Danke. Deine Reservierungsanfrage wurde gespeichert.');
                 } catch (err) {
-                    // Even if the download fails, still open the mailto link.
                     console.error(err);
+                    setStatus('Die Reservierung konnte gerade nicht gespeichert werden. Bitte versuche es erneut oder melde dich per E-Mail an jakob@klapp.pizza.');
+                } finally {
+                    setSubmitting(false);
+                }
+            });
+
+            loginFormEl.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                setLoginStatus('');
+                reservationListEl.innerHTML = '';
+
+                var loginEmail = loginEmailEl.value.trim().toLowerCase();
+                if (!loginEmail) {
+                    setLoginStatus('Bitte gib deine E-Mail-Adresse ein.');
+                    return;
                 }
 
-                var subject = encodeURIComponent('Reservierung ' + datum + ' ' + uhrzeit + ' (' + bereich + ') – ' + name);
-                var body = encodeURIComponent(
-                    'Hallo,\n\nich möchte einen Tisch reservieren:\n\n' +
-                    'Name: ' + name + '\n' +
-                    'Bereich: ' + (bereich === 'außen' ? 'außen' : 'innen') + '\n' +
-                    'Personen: ' + personen + '\n' +
-                    'Datum: ' + datum + '\n' +
-                    'Uhrzeit: ' + uhrzeit + '\n' +
-                    'Telefon: ' + telefon + '\n' +
-                    'E-Mail: ' + email +
-                    (nachricht ? '\n\nNachricht: ' + nachricht : '') +
-                    '\n\nVielen Dank!'
-                );
-                window.location.href = 'mailto:jakob@klapp.pizza?subject=' + subject + '&body=' + body;
+                try {
+                    setLoginSubmitting(true);
+                    setLoginStatus('Reservierungen werden geladen...');
+
+                    var result = await postJson('/api/reservations/lookup', {
+                        email: loginEmail
+                    });
+
+                    renderReservations(result.reservations || []);
+                    setLoginStatus('Reservierungen geladen.');
+                } catch (err) {
+                    console.error(err);
+                    setLoginStatus('Die Reservierungen konnten gerade nicht geladen werden.');
+                } finally {
+                    setLoginSubmitting(false);
+                }
             });
         })();
     </script>
