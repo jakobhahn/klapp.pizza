@@ -195,6 +195,14 @@
         .joschi-item-heading { font-weight: normal; /* Thin for "#1 vegi" etc. */ }
         .joschi-item-description { font-weight: normal; /* Thin for descriptions */ }
         .joschi-item-footer { font-weight: lighter; }
+        .joschi-banner-track {
+            animation: joschi-marquee 20s linear infinite;
+            will-change: transform;
+        }
+        @keyframes joschi-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
     </style>
     <script>
@@ -213,6 +221,18 @@
       </script>
 </head>
 <body class="bg-white text-joschi-green font-joschi">
+    <div class="sticky top-0 z-40 overflow-hidden border-b border-joschi-green/20 bg-joschi-green text-white">
+        <div class="joschi-banner-track flex w-max min-w-full items-center gap-8 whitespace-nowrap px-4 py-3 text-sm uppercase tracking-[0.16em] md:px-6 md:py-4 md:text-base">
+            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
+            <span aria-hidden="true">•</span>
+            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
+            <span aria-hidden="true">•</span>
+            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
+            <span aria-hidden="true">•</span>
+            <span>Geburtstagsfeier 1. Jahr Pizza Bistro am 02.05.2026 16-22 Uhr</span>
+        </div>
+    </div>
+
     <!-- Floating Background Image -->
     <div class="fixed right-0 top-1/2 -translate-y-1/2 z-0">
         <img src="home.png" alt="joschi Pizza Bistro Hamburg – Illustration" width="1200" height="630" loading="lazy" decoding="async" class="w-[300%] h-[300%] object-contain opacity-10 translate-x-1/4">
