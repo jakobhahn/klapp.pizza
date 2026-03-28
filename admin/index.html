@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>joschi Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f8fff8 0%, #ffffff 40%);
+            color: #38A169;
+        }
+        .text-joschi-green { color: #38A169; }
+        .bg-joschi-green { background-color: #38A169; }
+        .border-joschi-green { border-color: rgba(56, 161, 105, 0.25); }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'joschi-green': '#38A169'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="min-h-screen">
+    <main class="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
+        <header class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-sm uppercase tracking-[0.24em] text-joschi-green/70">klapp.pizza/admin</p>
+                <h1 class="text-4xl sm:text-5xl text-joschi-green">Reservierungen</h1>
+            </div>
+            <button id="logout-button" type="button" class="hidden self-start rounded border border-joschi-green px-4 py-2 text-sm text-joschi-green transition-colors hover:bg-joschi-green/10">Logout</button>
+        </header>
+
+        <section class="rounded-2xl border border-joschi-green bg-white/90 p-5 shadow-sm sm:p-6">
+            <form id="admin-login-form" class="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                <div>
+                    <label for="admin-password" class="mb-1 block text-sm text-joschi-green">Passwort</label>
+                    <input id="admin-password" name="admin-password" type="password" required
+                        class="w-full rounded border border-joschi-green px-4 py-3 text-joschi-green outline-none focus:ring-1 focus:ring-joschi-green"
+                        placeholder="ADMIN_PW">
+                </div>
+                <button type="submit" class="rounded bg-joschi-green px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90">Anzeigen</button>
+            </form>
+            <p id="admin-status" class="mt-3 text-sm text-joschi-green/80" aria-live="polite"></p>
+        </section>
+
+        <section class="mt-8">
+            <div id="admin-empty" class="rounded-2xl border border-dashed border-joschi-green bg-white/60 p-6 text-sm text-joschi-green/75">
+                Nach dem Login werden hier alle Reservierungen von heute und in der Zukunft angezeigt.
+            </div>
+            <div id="admin-list" class="grid gap-4"></div>
+        </section>
+    </main>
+
+    <script>
+        (function() {
+            var PASSWORD_STORAGE_KEY = 'joschi-admin-password';
+            var formEl = document.getElementById('admin-login-form');
+            var passwordEl = document.getElementById('admin-password');
+            var statusEl = document.getElementById('admin-status');
+            var listEl = document.getElementById('admin-list');
+            var emptyEl = document.getElementById('admin-empty');
+            var logoutButtonEl = document.getElementById('logout-button');
+            var currentPassword = sessionStorage.getItem(PASSWORD_STORAGE_KEY) || '';
+
+            function setStatus(message) {
+                statusEl.textContent = message || '';
+            }
+
+            function setLoggedIn(isLoggedIn) {
+                logoutButtonEl.classList.toggle('hidden', !isLoggedIn);
+            }
+
+            async function postJson(url, payload) {
+                var response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                var data = null;
+                try {
+                    data = await response.json();
+                } catch (err) {
+                    data = null;
+                }
+
+                if (!response.ok) {
+                    throw new Error(data && data.error ? data.error : 'Request failed');
+                }
+
+                return data;
+            }
+
+            function formatArea(area) {
+                return area === 'aussen' ? 'außen' : 'innen';
+            }
+
+            function formatStatus(status) {
+                if (status === 'confirmed') return 'bestätigt';
+                if (status === 'pending') return 'offen';
+                if (status === 'cancelled') return 'storniert';
+                if (status === 'completed') return 'erledigt';
+                if (status === 'no_show') return 'nicht erschienen';
+                return status;
+            }
+
+            function renderReservations(reservations) {
+                listEl.innerHTML = '';
+                emptyEl.classList.toggle('hidden', reservations.length > 0);
+
+                if (!reservations.length) {
+                    emptyEl.textContent = 'Keine kommenden Reservierungen gefunden.';
+                    return;
+                }
+
+                for (var i = 0; i < reservations.length; i++) {
+                    (function(reservation) {
+                        var card = document.createElement('article');
+                        card.className = 'rounded-2xl border border-joschi-green bg-white/95 p-5 shadow-sm';
+
+                        var top = document.createElement('div');
+                        top.className = 'flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between';
+
+                        var titleWrap = document.createElement('div');
+                        var title = document.createElement('h2');
+                        title.className = 'text-2xl text-joschi-green';
+                        title.textContent = reservation.reservation_date + ' · ' + String(reservation.reservation_time).slice(0, 5);
+
+                        var sub = document.createElement('p');
+                        sub.className = 'mt-1 text-sm text-joschi-green/80';
+                        sub.textContent = reservation.guest_name + ' · ' + reservation.party_size + ' Personen · ' + formatArea(reservation.area);
+
+                        titleWrap.appendChild(title);
+                        titleWrap.appendChild(sub);
+
+                        var status = document.createElement('span');
+                        status.className = 'inline-flex rounded-full border border-joschi-green px-3 py-1 text-xs uppercase tracking-[0.16em] text-joschi-green';
+                        status.textContent = formatStatus(reservation.status);
+
+                        top.appendChild(titleWrap);
+                        top.appendChild(status);
+
+                        var contact = document.createElement('div');
+                        contact.className = 'mt-4 grid gap-1 text-sm text-joschi-green/90 sm:grid-cols-2';
+                        contact.innerHTML =
+                            '<p><strong>E-Mail:</strong> ' + reservation.guest_email + '</p>' +
+                            '<p><strong>Telefon:</strong> ' + reservation.guest_phone + '</p>';
+
+                        var notes = document.createElement('p');
+                        notes.className = 'mt-4 text-sm text-joschi-green/80';
+                        notes.textContent = reservation.notes ? reservation.notes : 'Keine Nachricht hinterlegt.';
+
+                        var actions = document.createElement('div');
+                        actions.className = 'mt-5 flex flex-wrap gap-3';
+
+                        if (reservation.status !== 'confirmed') {
+                            var confirmButton = document.createElement('button');
+                            confirmButton.type = 'button';
+                            confirmButton.className = 'rounded bg-joschi-green px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90';
+                            confirmButton.textContent = 'Bestätigen';
+                            confirmButton.addEventListener('click', async function() {
+                                confirmButton.disabled = true;
+                                confirmButton.classList.add('opacity-60');
+                                setStatus('Reservierung wird bestätigt...');
+
+                                try {
+                                    await postJson('/api/admin/confirm', {
+                                        password: currentPassword,
+                                        reservation_id: reservation.id
+                                    });
+                                    await loadReservations();
+                                    setStatus('Reservierung bestätigt.');
+                                } catch (error) {
+                                    confirmButton.disabled = false;
+                                    confirmButton.classList.remove('opacity-60');
+                                    setStatus(error.message || 'Bestätigung fehlgeschlagen.');
+                                }
+                            });
+                            actions.appendChild(confirmButton);
+                        }
+
+                        card.appendChild(top);
+                        card.appendChild(contact);
+                        card.appendChild(notes);
+                        card.appendChild(actions);
+                        listEl.appendChild(card);
+                    })(reservations[i]);
+                }
+            }
+
+            async function loadReservations() {
+                var result = await postJson('/api/admin/reservations', {
+                    password: currentPassword
+                });
+                renderReservations(result.reservations || []);
+            }
+
+            formEl.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                currentPassword = passwordEl.value;
+                setStatus('Reservierungen werden geladen...');
+
+                try {
+                    await loadReservations();
+                    sessionStorage.setItem(PASSWORD_STORAGE_KEY, currentPassword);
+                    setLoggedIn(true);
+                    setStatus('Reservierungen geladen.');
+                } catch (error) {
+                    setLoggedIn(false);
+                    listEl.innerHTML = '';
+                    emptyEl.classList.remove('hidden');
+                    emptyEl.textContent = 'Nach dem Login werden hier alle Reservierungen von heute und in der Zukunft angezeigt.';
+                    setStatus(error.message || 'Login fehlgeschlagen.');
+                }
+            });
+
+            logoutButtonEl.addEventListener('click', function() {
+                currentPassword = '';
+                passwordEl.value = '';
+                sessionStorage.removeItem(PASSWORD_STORAGE_KEY);
+                setLoggedIn(false);
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                emptyEl.textContent = 'Nach dem Login werden hier alle Reservierungen von heute und in der Zukunft angezeigt.';
+                setStatus('');
+            });
+
+            if (currentPassword) {
+                passwordEl.value = currentPassword;
+                setLoggedIn(true);
+                setStatus('Reservierungen werden geladen...');
+                loadReservations()
+                    .then(function() {
+                        setStatus('Reservierungen geladen.');
+                    })
+                    .catch(function(error) {
+                        sessionStorage.removeItem(PASSWORD_STORAGE_KEY);
+                        currentPassword = '';
+                        passwordEl.value = '';
+                        setLoggedIn(false);
+                        setStatus(error.message || 'Login fehlgeschlagen.');
+                    });
+            }
+        })();
+    </script>
+</body>
+</html>

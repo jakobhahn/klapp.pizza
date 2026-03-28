@@ -1,5 +1,8 @@
+const crypto = require('node:crypto');
+
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const ADMIN_PW = process.env.ADMIN_PW;
 
 function assertEnv() {
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
@@ -71,7 +74,25 @@ function readJsonBody(req) {
   return req.body || {};
 }
 
+function assertAdminPassword(password) {
+  if (!ADMIN_PW) {
+    const error = new Error('Missing ADMIN_PW');
+    error.status = 500;
+    throw error;
+  }
+
+  const provided = Buffer.from(String(password || ''), 'utf8');
+  const expected = Buffer.from(ADMIN_PW, 'utf8');
+
+  if (provided.length !== expected.length || !crypto.timingSafeEqual(provided, expected)) {
+    const error = new Error('Unauthorized');
+    error.status = 401;
+    throw error;
+  }
+}
+
 module.exports = {
+  assertAdminPassword,
   readJsonBody,
   sendJson,
   supabaseFetch
