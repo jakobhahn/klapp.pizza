@@ -32,13 +32,7 @@ module.exports = async function handler(req, res) {
       area: body.area === 'aussen' ? 'aussen' : 'innen',
       reservation_date: body.reservation_date,
       reservation_time: body.reservation_time,
-      notes: String(body.notes || '').trim(),
-      source: 'website',
-      status: 'pending',
-      metadata: {
-        submitted_from: 'vercel-api',
-        submitted_at: new Date().toISOString()
-      }
+      notes: String(body.notes || '').trim()
     };
 
     if (!Number.isInteger(payload.party_size) || payload.party_size < 1) {
