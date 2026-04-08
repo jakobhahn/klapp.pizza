@@ -125,8 +125,40 @@ async function sendReservationConfirmedEmail(reservation) {
   });
 }
 
+async function sendFlyerVerificationCodeEmail(payload) {
+  await sendMail({
+    to: payload.email,
+    subject: `Dein joschi Code: ${payload.code}`,
+    text:
+      'Hallo ' + payload.name + ',\n\n' +
+      'dein Verifizierungscode für den Flyer ist:\n\n' +
+      payload.code + '\n\n' +
+      'Der Code ist 10 Minuten gültig.\n\n' +
+      'Viele Grüße\n' +
+      'joschi Pizza Bistro'
+  });
+}
+
+async function sendFlyerDiscountEmail(payload) {
+  await sendMail({
+    to: payload.email,
+    subject: `Dein joschi Rabattcode: ${payload.code}`,
+    text:
+      'Hallo ' + payload.name + ',\n\n' +
+      'dein Rabattcode ist:\n\n' +
+      payload.code + '\n\n' +
+      'Rabatt: ' + payload.discountPercent + '%\n' +
+      (payload.note ? payload.note + '\n\n' : '') +
+      'Zeig den Code einfach im Laden vor.\n\n' +
+      'Viele Grüße\n' +
+      'joschi Pizza Bistro'
+  });
+}
+
 module.exports = {
   hasMailConfig,
+  sendFlyerDiscountEmail,
+  sendFlyerVerificationCodeEmail,
   sendReservationConfirmedEmail,
   sendReservationRequestEmails
 };

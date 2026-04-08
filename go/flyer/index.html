@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>joschi Flyer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFF9F0',
+                        tomato: '#E2572E',
+                        basil: '#284A36',
+                        paper: '#FFFDF7'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif']
+                    },
+                    boxShadow: {
+                        card: '0 18px 50px rgba(40, 74, 54, 0.12)'
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,#fff3df,transparent_40%),linear-gradient(180deg,#fffdf7_0%,#fff4e6_100%)] font-sans text-basil">
+    <main class="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-4 py-10 sm:px-6">
+        <section class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+            <div class="rounded-[2rem] border border-basil/10 bg-paper/90 p-7 shadow-card sm:p-10">
+                <p class="text-sm uppercase tracking-[0.3em] text-tomato/80">joschi flyer</p>
+                <h1 class="mt-4 text-4xl font-semibold leading-tight sm:text-6xl">10% Rabatt fuer deinen ersten Besuch.</h1>
+                <p class="mt-5 max-w-2xl text-base leading-7 text-basil/80 sm:text-lg">
+                    Registriere dich mit Name und E-Mail, bestaetige den Code aus deiner Mail und wir schicken dir deinen Willkommensrabatt.
+                </p>
+                <div class="mt-6 rounded-3xl bg-basil px-5 py-4 text-sm text-white/90">
+                    Danach geht es weiter zu Instagram. Wenn du wiederkommen willst, kannst du dir spaeter noch einen separaten 5%-Code fuer den naechsten Besuch holen.
+                </div>
+            </div>
+
+            <div class="rounded-[2rem] border border-basil/10 bg-white/95 p-6 shadow-card sm:p-8">
+                <p id="status" class="mb-5 min-h-[1.5rem] text-sm text-basil/75" aria-live="polite"></p>
+
+                <section id="register-step" class="hidden">
+                    <h2 class="text-2xl font-semibold">Jetzt registrieren</h2>
+                    <form id="register-form" class="mt-5 space-y-4">
+                        <div>
+                            <label for="name" class="mb-1 block text-sm font-medium">Name</label>
+                            <input id="name" name="name" type="text" required class="w-full rounded-2xl border border-basil/20 bg-cream px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato">
+                        </div>
+                        <div>
+                            <label for="email" class="mb-1 block text-sm font-medium">E-Mail</label>
+                            <input id="email" name="email" type="email" required class="w-full rounded-2xl border border-basil/20 bg-cream px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato">
+                        </div>
+                        <div class="rounded-2xl border border-basil/10 bg-basil/[0.04] p-4 text-sm leading-6 text-basil/80">
+                            Mit dem Absenden stimmst du zu, dass wir dir die fuer diese Aktion notwendigen Service-E-Mails fuer Verifizierung und Rabattcode schicken.
+                        </div>
+                        <label class="flex items-start gap-3 rounded-2xl border border-basil/10 bg-basil/[0.03] p-4 text-sm leading-6 text-basil/80">
+                            <input id="marketing-consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-basil/30 text-tomato focus:ring-tomato">
+                            <span>Ich moechte zusaetzlich Marketing-E-Mails von joschi zu Aktionen und Neuigkeiten erhalten. Ich kann das jederzeit widerrufen.</span>
+                        </label>
+                        <button type="submit" class="w-full rounded-2xl bg-tomato px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Code anfordern</button>
+                    </form>
+                </section>
+
+                <section id="verify-step" class="hidden">
+                    <h2 class="text-2xl font-semibold">Code bestaetigen</h2>
+                    <p id="verify-copy" class="mt-3 text-sm leading-6 text-basil/75"></p>
+                    <form id="verify-form" class="mt-5 space-y-4">
+                        <div>
+                            <label for="code" class="mb-1 block text-sm font-medium">6-stelliger Code</label>
+                            <input id="code" name="code" type="text" inputmode="numeric" maxlength="6" required class="w-full rounded-2xl border border-basil/20 bg-cream px-4 py-3 text-center text-2xl tracking-[0.5em] outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato">
+                        </div>
+                        <button type="submit" class="w-full rounded-2xl bg-basil px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Verifizieren</button>
+                    </form>
+                </section>
+
+                <section id="recognized-step" class="hidden">
+                    <h2 class="text-2xl font-semibold">Willkommen zurueck</h2>
+                    <p id="recognized-copy" class="mt-3 text-sm leading-6 text-basil/75"></p>
+                    <div class="mt-5 flex flex-col gap-3">
+                        <a id="instagram-link" href="https://www.instagram.com/joschi_hamburg/" class="rounded-2xl bg-tomato px-5 py-3 text-center text-sm font-semibold text-white transition hover:opacity-90">Zu Instagram</a>
+                        <button id="repeat-button" type="button" class="hidden rounded-2xl border border-basil/20 px-5 py-3 text-sm font-semibold text-basil transition hover:bg-basil/5">Ich komme wieder</button>
+                    </div>
+                    <p id="repeat-status" class="mt-4 text-sm text-basil/75"></p>
+                </section>
+
+                <section id="done-step" class="hidden">
+                    <h2 class="text-2xl font-semibold">Fast fertig</h2>
+                    <p class="mt-3 text-sm leading-6 text-basil/75">
+                        Dein Rabattcode wurde per E-Mail verschickt. Du wirst jetzt weitergeleitet.
+                    </p>
+                    <a id="done-link" href="https://www.instagram.com/joschi_hamburg/" class="mt-5 inline-flex rounded-2xl bg-tomato px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Jetzt zu Instagram</a>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        (function() {
+            var state = {
+                email: '',
+                targetUrl: 'https://www.instagram.com/joschi_hamburg/',
+                redirectTimer: null
+            };
+
+            var statusEl = document.getElementById('status');
+            var registerStepEl = document.getElementById('register-step');
+            var verifyStepEl = document.getElementById('verify-step');
+            var recognizedStepEl = document.getElementById('recognized-step');
+            var doneStepEl = document.getElementById('done-step');
+            var verifyCopyEl = document.getElementById('verify-copy');
+            var recognizedCopyEl = document.getElementById('recognized-copy');
+            var repeatStatusEl = document.getElementById('repeat-status');
+            var instagramLinkEl = document.getElementById('instagram-link');
+            var doneLinkEl = document.getElementById('done-link');
+            var repeatButtonEl = document.getElementById('repeat-button');
+
+            function setStatus(message) {
+                statusEl.textContent = message || '';
+            }
+
+            function showStep(step) {
+                registerStepEl.classList.add('hidden');
+                verifyStepEl.classList.add('hidden');
+                recognizedStepEl.classList.add('hidden');
+                doneStepEl.classList.add('hidden');
+                step.classList.remove('hidden');
+            }
+
+            async function postJson(url, payload) {
+                var response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload || {})
+                });
+                var data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data && data.error ? data.error : 'Request failed');
+                }
+                return data;
+            }
+
+            function redirectSoon(url) {
+                window.clearTimeout(state.redirectTimer);
+                state.redirectTimer = window.setTimeout(function() {
+                    window.location.href = url;
+                }, 2200);
+            }
+
+            function applyTarget(url) {
+                state.targetUrl = url || state.targetUrl;
+                instagramLinkEl.href = state.targetUrl;
+                doneLinkEl.href = state.targetUrl;
+            }
+
+            function renderResolved(data) {
+                applyTarget(data.campaign && data.campaign.targetUrl);
+
+                if (data.recognized) {
+                    showStep(recognizedStepEl);
+                    recognizedCopyEl.textContent =
+                        'Dein Browser ist bereits erkannt. Wenn du moechtest, geht es direkt weiter zu Instagram.';
+                    repeatStatusEl.textContent = data.discounts && data.discounts.repeatVisit
+                        ? 'Dein 5%-Code fuer den naechsten Besuch wurde bereits verschickt.'
+                        : data.discounts && data.discounts.repeatEligible
+                            ? 'Du kannst dir jetzt deinen separaten 5%-Code fuer den naechsten Besuch per Mail schicken lassen.'
+                            : 'Der 5%-Code fuer spaeter wird erst verfuegbar, nachdem dein 10%-Willkommenscode eingeloest wurde.';
+                    repeatButtonEl.classList.toggle('hidden', !(data.discounts && data.discounts.repeatEligible && !data.discounts.repeatVisit));
+                    setStatus('Weiterleitung laeuft ...');
+                    redirectSoon(state.targetUrl);
+                    return;
+                }
+
+                showStep(registerStepEl);
+                setStatus('');
+            }
+
+            document.getElementById('register-form').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                var name = document.getElementById('name').value.trim();
+                var email = document.getElementById('email').value.trim();
+                var marketingConsent = document.getElementById('marketing-consent').checked;
+
+                setStatus('Verifizierungscode wird verschickt ...');
+
+                try {
+                    var result = await postJson('/api/flyer/register', {
+                        name: name,
+                        email: email,
+                        marketing_consent: marketingConsent
+                    });
+                    state.email = email;
+                    verifyCopyEl.textContent = 'Wir haben einen Code an ' + result.emailMasked + ' geschickt. Du kannst ihn jetzt oder spaeter eingeben.';
+                    showStep(verifyStepEl);
+                    setStatus('Code verschickt.');
+                } catch (error) {
+                    setStatus(error.message || 'Registrierung fehlgeschlagen.');
+                }
+            });
+
+            document.getElementById('verify-form').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                var code = document.getElementById('code').value.trim();
+
+                setStatus('Code wird geprueft ...');
+
+                try {
+                    var result = await postJson('/api/flyer/verify', {
+                        email: state.email,
+                        code: code
+                    });
+                    applyTarget(result.targetUrl);
+                    showStep(doneStepEl);
+                    setStatus('Verifiziert. Dein Rabattcode wurde per Mail geschickt.');
+                    redirectSoon(state.targetUrl);
+                } catch (error) {
+                    setStatus(error.message || 'Verifizierung fehlgeschlagen.');
+                }
+            });
+
+            repeatButtonEl.addEventListener('click', async function() {
+                repeatButtonEl.disabled = true;
+                repeatStatusEl.textContent = '5%-Code wird verschickt ...';
+
+                try {
+                    await postJson('/api/flyer/repeat-visit', {});
+                    repeatStatusEl.textContent = 'Dein 5%-Code fuer den naechsten Besuch wurde per E-Mail verschickt.';
+                    repeatButtonEl.classList.add('hidden');
+                } catch (error) {
+                    repeatButtonEl.disabled = false;
+                    repeatStatusEl.textContent = error.message || '5%-Code konnte gerade nicht verschickt werden.';
+                }
+            });
+
+            setStatus('Flyer wird vorbereitet ...');
+            postJson('/api/flyer/resolve', {})
+                .then(renderResolved)
+                .catch(function(error) {
+                    showStep(registerStepEl);
+                    setStatus(error.message || 'Flyer konnte nicht geladen werden.');
+                });
+        })();
+    </script>
+</body>
+</html>

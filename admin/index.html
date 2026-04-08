@@ -7,23 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #f8fff8 0%, #ffffff 40%);
-            color: #38A169;
-        }
-        .text-joschi-green { color: #38A169; }
-        .bg-joschi-green { background-color: #38A169; }
-        .border-joschi-green { border-color: rgba(56, 161, 105, 0.25); }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'joschi-green': '#38A169'
+                        basil: '#284A36',
+                        tomato: '#E2572E',
+                        paper: '#FFFDF7'
                     },
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif']
@@ -33,112 +25,90 @@
         };
     </script>
 </head>
-<body class="min-h-screen">
-    <main class="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
-        <header class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+<body class="min-h-screen bg-[linear-gradient(180deg,#f9fff8_0%,#fffdf7_100%)] font-sans text-basil">
+    <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
+        <header class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <p class="text-sm uppercase tracking-[0.24em] text-joschi-green/70">klapp.pizza/admin</p>
-                <h1 data-i18n="admin_heading" class="text-4xl sm:text-5xl text-joschi-green">reservierungen</h1>
+                <p class="text-sm uppercase tracking-[0.28em] text-tomato/70">klapp.pizza/admin</p>
+                <h1 class="mt-2 text-4xl font-semibold sm:text-5xl">Betrieb und Kampagnen</h1>
             </div>
-            <button id="logout-button" data-i18n="logout" type="button" class="hidden self-start rounded border border-joschi-green px-4 py-2 text-sm text-joschi-green transition-colors hover:bg-joschi-green/10">abmelden</button>
+            <button id="logout-button" type="button" class="hidden rounded-2xl border border-basil/20 px-4 py-2 text-sm transition hover:bg-basil/5">Abmelden</button>
         </header>
 
-        <section class="rounded-2xl border border-joschi-green bg-white/90 p-5 shadow-sm sm:p-6">
+        <section class="rounded-[2rem] border border-basil/10 bg-white/95 p-5 shadow-sm sm:p-6">
             <form id="admin-login-form" class="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
                 <div>
-                    <label for="admin-password" data-i18n="password" class="mb-1 block text-sm text-joschi-green">Passwort</label>
-                    <input id="admin-password" name="admin-password" type="password" required
-                        class="w-full rounded border border-joschi-green px-4 py-3 text-joschi-green outline-none focus:ring-1 focus:ring-joschi-green"
-                        placeholder="ADMIN_PW">
+                    <label for="admin-password" class="mb-1 block text-sm font-medium">Passwort</label>
+                    <input id="admin-password" name="admin-password" type="password" required class="w-full rounded-2xl border border-basil/20 bg-paper px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato" placeholder="ADMIN_PW">
                 </div>
-                <button type="submit" data-i18n="show" class="rounded bg-joschi-green px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90">Anzeigen</button>
+                <button type="submit" class="rounded-2xl bg-tomato px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">Anzeigen</button>
             </form>
-            <p id="admin-status" class="mt-3 text-sm text-joschi-green/80" aria-live="polite"></p>
+            <p id="admin-status" class="mt-3 text-sm text-basil/80" aria-live="polite"></p>
         </section>
 
-        <section class="mt-8">
-            <div id="admin-empty" data-i18n="admin_empty" class="rounded-2xl border border-dashed border-joschi-green bg-white/60 p-6 text-sm text-joschi-green/75">
-                Nach dem Login werden hier alle Reservierungen von heute und in der Zukunft angezeigt.
-            </div>
-            <div id="admin-list" class="grid gap-4"></div>
+        <section id="admin-content" class="mt-8 hidden space-y-8">
+            <section class="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+                <div class="rounded-[2rem] border border-basil/10 bg-white/95 p-5 shadow-sm sm:p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.22em] text-tomato/70">Reservierungen</p>
+                            <h2 class="mt-1 text-2xl font-semibold">Kommende Tische</h2>
+                        </div>
+                        <button id="refresh-reservations" type="button" class="rounded-2xl border border-basil/20 px-4 py-2 text-sm transition hover:bg-basil/5">Neu laden</button>
+                    </div>
+                    <p id="reservation-empty" class="mt-5 rounded-2xl border border-dashed border-basil/15 bg-paper p-5 text-sm text-basil/70">Nach dem Login erscheinen hier alle Reservierungen von heute und in der Zukunft.</p>
+                    <div id="reservation-list" class="mt-5 grid gap-4"></div>
+                </div>
+
+                <div class="rounded-[2rem] border border-basil/10 bg-white/95 p-5 shadow-sm sm:p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.22em] text-tomato/70">Flyer</p>
+                            <h2 class="mt-1 text-2xl font-semibold">Aktive Kampagnen</h2>
+                        </div>
+                        <button id="refresh-campaigns" type="button" class="rounded-2xl border border-basil/20 px-4 py-2 text-sm transition hover:bg-basil/5">Neu laden</button>
+                    </div>
+                    <div id="campaign-list" class="mt-5 grid gap-4"></div>
+                </div>
+            </section>
+
+            <section class="rounded-[2rem] border border-basil/10 bg-white/95 p-5 shadow-sm sm:p-6">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p class="text-sm uppercase tracking-[0.22em] text-tomato/70">Rabattcodes</p>
+                        <h2 class="mt-1 text-2xl font-semibold">Suchen, einloesen, rueckgaengig machen</h2>
+                    </div>
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
+                        <div>
+                            <label for="code-search" class="mb-1 block text-sm font-medium">Suche nach Code, Name oder E-Mail</label>
+                            <input id="code-search" type="text" class="w-full rounded-2xl border border-basil/20 bg-paper px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato" placeholder="JOSHI10, Max, max@example.com">
+                        </div>
+                        <button id="refresh-codes" type="button" class="rounded-2xl border border-basil/20 px-4 py-3 text-sm transition hover:bg-basil/5">Neu laden</button>
+                    </div>
+                </div>
+                <div id="codes-list" class="mt-5 grid gap-4"></div>
+            </section>
         </section>
     </main>
 
     <script>
         (function() {
-            var locale = /^de\b/i.test((navigator.languages && navigator.languages[0]) || navigator.language || 'de') ? 'de' : 'en';
-            var translations = {
-                de: {
-                    admin_heading: 'reservierungen',
-                    logout: 'abmelden',
-                    password: 'Passwort',
-                    show: 'Anzeigen',
-                    admin_empty: 'Nach dem Login werden hier alle Reservierungen von heute und in der Zukunft angezeigt.',
-                    none_found: 'Keine kommenden Reservierungen gefunden.',
-                    people: 'Personen',
-                    no_message: 'Keine Nachricht hinterlegt.',
-                    confirm: 'Bestätigen',
-                    confirming: 'Reservierung wird bestätigt...',
-                    confirmed: 'Reservierung bestätigt.',
-                    confirm_failed: 'Bestätigung fehlgeschlagen.',
-                    loading: 'Reservierungen werden geladen...',
-                    loaded: 'Reservierungen geladen.',
-                    login_failed: 'Login fehlgeschlagen.',
-                    email: 'E-Mail',
-                    phone: 'Telefon',
-                    open: 'offen',
-                    confirmed_status: 'bestätigt',
-                    cancelled: 'storniert',
-                    completed: 'erledigt',
-                    no_show: 'nicht erschienen',
-                    inside: 'innen',
-                    outside: 'außen'
-                },
-                en: {
-                    admin_heading: 'reservations',
-                    logout: 'logout',
-                    password: 'password',
-                    show: 'show',
-                    admin_empty: 'After login, all reservations for today and the future will appear here.',
-                    none_found: 'No upcoming reservations found.',
-                    people: 'guests',
-                    no_message: 'No message provided.',
-                    confirm: 'Confirm',
-                    confirming: 'Confirming reservation...',
-                    confirmed: 'Reservation confirmed.',
-                    confirm_failed: 'Confirmation failed.',
-                    loading: 'Loading reservations...',
-                    loaded: 'Reservations loaded.',
-                    login_failed: 'Login failed.',
-                    email: 'Email',
-                    phone: 'Phone',
-                    open: 'open',
-                    confirmed_status: 'confirmed',
-                    cancelled: 'cancelled',
-                    completed: 'completed',
-                    no_show: 'no-show',
-                    inside: 'inside',
-                    outside: 'outside'
-                }
-            };
-            function t(key) {
-                return (translations[locale] && translations[locale][key]) || translations.de[key] || key;
-            }
-            function applyTranslations() {
-                document.documentElement.lang = locale;
-                var nodes = document.querySelectorAll('[data-i18n]');
-                for (var i = 0; i < nodes.length; i++) {
-                    nodes[i].textContent = t(nodes[i].getAttribute('data-i18n'));
-                }
-            }
             var PASSWORD_STORAGE_KEY = 'joschi-admin-password';
-            var formEl = document.getElementById('admin-login-form');
+            var currentPassword = sessionStorage.getItem(PASSWORD_STORAGE_KEY) || '';
+            var reservations = [];
+            var campaigns = [];
+            var codes = [];
+
+            var loginFormEl = document.getElementById('admin-login-form');
             var passwordEl = document.getElementById('admin-password');
             var statusEl = document.getElementById('admin-status');
-            var listEl = document.getElementById('admin-list');
-            var emptyEl = document.getElementById('admin-empty');
             var logoutButtonEl = document.getElementById('logout-button');
-            var currentPassword = sessionStorage.getItem(PASSWORD_STORAGE_KEY) || '';
+            var adminContentEl = document.getElementById('admin-content');
+            var reservationEmptyEl = document.getElementById('reservation-empty');
+            var reservationListEl = document.getElementById('reservation-list');
+            var campaignListEl = document.getElementById('campaign-list');
+            var codesListEl = document.getElementById('codes-list');
+            var codeSearchEl = document.getElementById('code-search');
 
             function setStatus(message) {
                 statusEl.textContent = message || '';
@@ -146,180 +116,299 @@
 
             function setLoggedIn(isLoggedIn) {
                 logoutButtonEl.classList.toggle('hidden', !isLoggedIn);
+                adminContentEl.classList.toggle('hidden', !isLoggedIn);
             }
 
             async function postJson(url, payload) {
                 var response = await fetch(url, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
-                var data = null;
-                try {
-                    data = await response.json();
-                } catch (err) {
-                    data = null;
-                }
-
+                var data = await response.json();
                 if (!response.ok) {
                     throw new Error(data && data.error ? data.error : 'Request failed');
                 }
-
                 return data;
             }
 
-            function formatArea(area) {
-                return area === 'aussen' ? t('outside') : t('inside');
+            function createButton(label, onClick, variant) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className =
+                    variant === 'primary'
+                        ? 'rounded-2xl bg-tomato px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90'
+                        : 'rounded-2xl border border-basil/20 px-4 py-2 text-sm transition hover:bg-basil/5';
+                button.textContent = label;
+                button.addEventListener('click', onClick);
+                return button;
             }
 
-            function formatStatus(status) {
-                if (status === 'confirmed') return t('confirmed_status');
-                if (status === 'pending') return t('open');
-                if (status === 'cancelled') return t('cancelled');
-                if (status === 'completed') return t('completed');
-                if (status === 'no_show') return t('no_show');
-                return status;
+            function renderReservations() {
+                reservationListEl.innerHTML = '';
+                reservationEmptyEl.classList.toggle('hidden', reservations.length > 0);
+
+                reservations.forEach(function(reservation) {
+                    var card = document.createElement('article');
+                    card.className = 'rounded-[1.5rem] border border-basil/10 bg-paper p-5';
+
+                    var title = document.createElement('h3');
+                    title.className = 'text-xl font-semibold';
+                    title.textContent = reservation.reservation_date + ' · ' + String(reservation.reservation_time).slice(0, 5);
+
+                    var info = document.createElement('p');
+                    info.className = 'mt-2 text-sm text-basil/75';
+                    info.textContent =
+                        reservation.guest_name + ' · ' +
+                        reservation.party_size + ' Personen · ' +
+                        reservation.area + ' · ' +
+                        reservation.status;
+
+                    var contact = document.createElement('p');
+                    contact.className = 'mt-2 text-sm text-basil/75';
+                    contact.textContent = reservation.guest_email + ' · ' + reservation.guest_phone;
+
+                    var actions = document.createElement('div');
+                    actions.className = 'mt-4 flex flex-wrap gap-3';
+
+                    if (reservation.status !== 'confirmed') {
+                        actions.appendChild(createButton('Bestaetigen', async function() {
+                            setStatus('Reservierung wird bestaetigt ...');
+                            await postJson('/api/admin/confirm', {
+                                password: currentPassword,
+                                reservation_id: reservation.id
+                            });
+                            await loadAll();
+                            setStatus('Reservierung bestaetigt.');
+                        }, 'primary'));
+                    }
+
+                    card.appendChild(title);
+                    card.appendChild(info);
+                    card.appendChild(contact);
+                    if (reservation.notes) {
+                        var notes = document.createElement('p');
+                        notes.className = 'mt-3 text-sm text-basil/70';
+                        notes.textContent = reservation.notes;
+                        card.appendChild(notes);
+                    }
+                    card.appendChild(actions);
+                    reservationListEl.appendChild(card);
+                });
             }
 
-            function renderReservations(reservations) {
-                listEl.innerHTML = '';
-                emptyEl.classList.toggle('hidden', reservations.length > 0);
+            function renderCampaigns() {
+                campaignListEl.innerHTML = '';
 
-                if (!reservations.length) {
-                    emptyEl.textContent = t('none_found');
+                campaigns.forEach(function(campaign) {
+                    var form = document.createElement('form');
+                    form.className = 'rounded-[1.5rem] border border-basil/10 bg-paper p-5 space-y-4';
+
+                    form.innerHTML =
+                        '<div>' +
+                            '<p class="text-xs uppercase tracking-[0.18em] text-tomato/70">' + campaign.slug + '</p>' +
+                            '<h3 class="mt-1 text-xl font-semibold">' + campaign.label + '</h3>' +
+                        '</div>' +
+                        '<div>' +
+                            '<label class="mb-1 block text-sm font-medium">Ziel-URL</label>' +
+                            '<input name="target_url" type="url" value="' + campaign.target_url + '" class="w-full rounded-2xl border border-basil/20 bg-white px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato">' +
+                        '</div>' +
+                        '<div>' +
+                            '<label class="mb-1 block text-sm font-medium">Beschreibung</label>' +
+                            '<textarea name="description" rows="3" class="w-full rounded-2xl border border-basil/20 bg-white px-4 py-3 outline-none transition focus:border-tomato focus:ring-1 focus:ring-tomato">' + (campaign.description || '') + '</textarea>' +
+                        '</div>' +
+                        '<label class="flex items-center gap-3 text-sm text-basil/80">' +
+                            '<input name="is_active" type="checkbox" ' + (campaign.is_active ? 'checked' : '') + ' class="h-4 w-4 rounded border-basil/20 text-tomato focus:ring-tomato">' +
+                            '<span>Kampagne aktiv</span>' +
+                        '</label>';
+
+                    var actions = document.createElement('div');
+                    actions.className = 'flex justify-end';
+                    actions.appendChild(createButton('Speichern', async function(event) {
+                        event.preventDefault();
+                        var formData = new FormData(form);
+                        setStatus('Kampagne wird gespeichert ...');
+                        await postJson('/api/admin/flyer-campaigns', {
+                            password: currentPassword,
+                            update: true,
+                            campaign_id: campaign.id,
+                            target_url: formData.get('target_url'),
+                            description: formData.get('description'),
+                            is_active: form.querySelector('[name="is_active"]').checked
+                        });
+                        await loadCampaigns();
+                        setStatus('Kampagne gespeichert.');
+                    }, 'primary'));
+
+                    form.appendChild(actions);
+                    campaignListEl.appendChild(form);
+                });
+            }
+
+            function renderCodes() {
+                var query = (codeSearchEl.value || '').trim().toLowerCase();
+                var filtered = !query
+                    ? codes
+                    : codes.filter(function(code) {
+                        return (
+                            String(code.code || '').toLowerCase().indexOf(query) !== -1 ||
+                            String(code.registration_name || '').toLowerCase().indexOf(query) !== -1 ||
+                            String(code.email_normalized || '').toLowerCase().indexOf(query) !== -1
+                        );
+                    });
+
+                codesListEl.innerHTML = '';
+
+                if (!filtered.length) {
+                    var empty = document.createElement('p');
+                    empty.className = 'rounded-[1.5rem] border border-dashed border-basil/15 bg-paper p-5 text-sm text-basil/70';
+                    empty.textContent = 'Keine passenden Rabattcodes gefunden.';
+                    codesListEl.appendChild(empty);
                     return;
                 }
 
-                for (var i = 0; i < reservations.length; i++) {
-                    (function(reservation) {
-                        var card = document.createElement('article');
-                        card.className = 'rounded-2xl border border-joschi-green bg-white/95 p-5 shadow-sm';
+                filtered.forEach(function(code) {
+                    var card = document.createElement('article');
+                    card.className = 'rounded-[1.5rem] border border-basil/10 bg-paper p-5';
 
-                        var top = document.createElement('div');
-                        top.className = 'flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between';
+                    var heading = document.createElement('div');
+                    heading.className = 'flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between';
 
-                        var titleWrap = document.createElement('div');
-                        var title = document.createElement('h2');
-                        title.className = 'text-2xl text-joschi-green';
-                        title.textContent = reservation.reservation_date + ' · ' + String(reservation.reservation_time).slice(0, 5);
+                    var left = document.createElement('div');
+                    left.innerHTML =
+                        '<p class="text-xs uppercase tracking-[0.18em] text-tomato/70">' + code.reason + '</p>' +
+                        '<h3 class="mt-1 text-xl font-semibold">' + code.code + '</h3>' +
+                        '<p class="mt-2 text-sm text-basil/75">' + code.registration_name + ' · ' + code.email_normalized + '</p>' +
+                        '<p class="mt-1 text-sm text-basil/70">' + code.discount_percent + '% · Status: ' + code.status + '</p>';
 
-                        var sub = document.createElement('p');
-                        sub.className = 'mt-1 text-sm text-joschi-green/80';
-                        sub.textContent = reservation.guest_name + ' · ' + reservation.party_size + ' ' + t('people') + ' · ' + formatArea(reservation.area);
+                    var right = document.createElement('div');
+                    right.className = 'text-sm text-basil/70';
+                    right.innerHTML =
+                        '<p>Ausgestellt: ' + new Date(code.issued_at).toLocaleString('de-DE') + '</p>' +
+                        '<p>Eingeloest: ' + (code.redeemed_at ? new Date(code.redeemed_at).toLocaleString('de-DE') : '-') + '</p>';
 
-                        titleWrap.appendChild(title);
-                        titleWrap.appendChild(sub);
+                    heading.appendChild(left);
+                    heading.appendChild(right);
 
-                        var status = document.createElement('span');
-                        status.className = 'inline-flex rounded-full border border-joschi-green px-3 py-1 text-xs uppercase tracking-[0.16em] text-joschi-green';
-                        status.textContent = formatStatus(reservation.status);
-
-                        top.appendChild(titleWrap);
-                        top.appendChild(status);
-
-                        var contact = document.createElement('div');
-                        contact.className = 'mt-4 grid gap-1 text-sm text-joschi-green/90 sm:grid-cols-2';
-                        contact.innerHTML =
-                            '<p><strong>' + t('email') + ':</strong> ' + reservation.guest_email + '</p>' +
-                            '<p><strong>' + t('phone') + ':</strong> ' + reservation.guest_phone + '</p>';
-
-                        var notes = document.createElement('p');
-                        notes.className = 'mt-4 text-sm text-joschi-green/80';
-                        notes.textContent = reservation.notes ? reservation.notes : t('no_message');
-
-                        var actions = document.createElement('div');
-                        actions.className = 'mt-5 flex flex-wrap gap-3';
-
-                        if (reservation.status !== 'confirmed') {
-                            var confirmButton = document.createElement('button');
-                            confirmButton.type = 'button';
-                            confirmButton.className = 'rounded bg-joschi-green px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90';
-                            confirmButton.textContent = t('confirm');
-                            confirmButton.addEventListener('click', async function() {
-                                confirmButton.disabled = true;
-                                confirmButton.classList.add('opacity-60');
-                                setStatus(t('confirming'));
-
-                                try {
-                                    await postJson('/api/admin/confirm', {
-                                        password: currentPassword,
-                                        reservation_id: reservation.id
-                                    });
-                                    await loadReservations();
-                                    setStatus(t('confirmed'));
-                                } catch (error) {
-                                    confirmButton.disabled = false;
-                                    confirmButton.classList.remove('opacity-60');
-                                    setStatus(error.message || t('confirm_failed'));
-                                }
+                    var actions = document.createElement('div');
+                    actions.className = 'mt-4 flex flex-wrap gap-3';
+                    if (code.status === 'redeemed') {
+                        actions.appendChild(createButton('Einloesung rueckgaengig', async function() {
+                            setStatus('Einloesung wird rueckgaengig gemacht ...');
+                            await postJson('/api/admin/flyer-redeem', {
+                                password: currentPassword,
+                                discount_id: code.id,
+                                undo: true
                             });
-                            actions.appendChild(confirmButton);
-                        }
+                            await loadCodes();
+                            setStatus('Einloesung rueckgaengig gemacht.');
+                        }));
+                    } else {
+                        actions.appendChild(createButton('Als eingelöst markieren', async function() {
+                            setStatus('Rabattcode wird eingeloest ...');
+                            await postJson('/api/admin/flyer-redeem', {
+                                password: currentPassword,
+                                discount_id: code.id,
+                                redemption_reference: 'POS'
+                            });
+                            await loadCodes();
+                            setStatus('Rabattcode eingeloest.');
+                        }, 'primary'));
+                    }
 
-                        card.appendChild(top);
-                        card.appendChild(contact);
-                        card.appendChild(notes);
-                        card.appendChild(actions);
-                        listEl.appendChild(card);
-                    })(reservations[i]);
-                }
+                    card.appendChild(heading);
+                    card.appendChild(actions);
+                    codesListEl.appendChild(card);
+                });
             }
 
             async function loadReservations() {
-                var result = await postJson('/api/admin/reservations', {
-                    password: currentPassword
-                });
-                renderReservations(result.reservations || []);
+                var result = await postJson('/api/admin/reservations', { password: currentPassword });
+                reservations = result.reservations || [];
+                renderReservations();
             }
 
-            formEl.addEventListener('submit', async function(event) {
+            async function loadCampaigns() {
+                var result = await postJson('/api/admin/flyer-campaigns', { password: currentPassword });
+                campaigns = result.campaigns || [];
+                renderCampaigns();
+            }
+
+            async function loadCodes() {
+                var result = await postJson('/api/admin/flyer-codes', { password: currentPassword });
+                codes = result.codes || [];
+                renderCodes();
+            }
+
+            async function loadAll() {
+                await Promise.all([loadReservations(), loadCampaigns(), loadCodes()]);
+            }
+
+            loginFormEl.addEventListener('submit', async function(event) {
                 event.preventDefault();
                 currentPassword = passwordEl.value;
-                setStatus(t('loading'));
+                setStatus('Admin wird geladen ...');
 
                 try {
-                    await loadReservations();
+                    await loadAll();
                     sessionStorage.setItem(PASSWORD_STORAGE_KEY, currentPassword);
                     setLoggedIn(true);
-                    setStatus(t('loaded'));
+                    setStatus('Admin geladen.');
                 } catch (error) {
                     setLoggedIn(false);
-                    listEl.innerHTML = '';
-                    emptyEl.classList.remove('hidden');
-                    emptyEl.textContent = t('admin_empty');
-                    setStatus(error.message || t('login_failed'));
+                    setStatus(error.message || 'Login fehlgeschlagen.');
                 }
             });
+
+            document.getElementById('refresh-reservations').addEventListener('click', async function() {
+                setStatus('Reservierungen werden neu geladen ...');
+                await loadReservations();
+                setStatus('Reservierungen geladen.');
+            });
+
+            document.getElementById('refresh-campaigns').addEventListener('click', async function() {
+                setStatus('Kampagnen werden neu geladen ...');
+                await loadCampaigns();
+                setStatus('Kampagnen geladen.');
+            });
+
+            document.getElementById('refresh-codes').addEventListener('click', async function() {
+                setStatus('Rabattcodes werden neu geladen ...');
+                await loadCodes();
+                setStatus('Rabattcodes geladen.');
+            });
+
+            codeSearchEl.addEventListener('input', renderCodes);
 
             logoutButtonEl.addEventListener('click', function() {
                 currentPassword = '';
                 passwordEl.value = '';
+                reservations = [];
+                campaigns = [];
+                codes = [];
                 sessionStorage.removeItem(PASSWORD_STORAGE_KEY);
+                reservationListEl.innerHTML = '';
+                campaignListEl.innerHTML = '';
+                codesListEl.innerHTML = '';
+                reservationEmptyEl.classList.remove('hidden');
                 setLoggedIn(false);
-                listEl.innerHTML = '';
-                emptyEl.classList.remove('hidden');
-                emptyEl.textContent = t('admin_empty');
                 setStatus('');
             });
 
-            applyTranslations();
             if (currentPassword) {
                 passwordEl.value = currentPassword;
-                setLoggedIn(true);
-                setStatus(t('loading'));
-                loadReservations()
+                setStatus('Admin wird geladen ...');
+                loadAll()
                     .then(function() {
-                        setStatus(t('loaded'));
+                        setLoggedIn(true);
+                        setStatus('Admin geladen.');
                     })
                     .catch(function(error) {
-                        sessionStorage.removeItem(PASSWORD_STORAGE_KEY);
                         currentPassword = '';
                         passwordEl.value = '';
+                        sessionStorage.removeItem(PASSWORD_STORAGE_KEY);
                         setLoggedIn(false);
-                        setStatus(error.message || t('login_failed'));
+                        setStatus(error.message || 'Login fehlgeschlagen.');
                     });
             }
         })();
