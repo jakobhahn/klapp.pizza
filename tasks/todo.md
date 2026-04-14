@@ -2,27 +2,30 @@
 
 ## Goal
 
-Enable AI agents to complete a reservation on behalf of a customer through the website's reservation flow, with an explicit machine-readable contract for available inputs and times.
+Enable a public-ready Custom GPT Action setup for reservations, including an OpenAPI schema and a privacy policy URL usable in the GPT builder.
 
 ## Plan
 
-- [x] Inspect the current reservation form, API, and data model for the cleanest agent integration point.
-- [x] Add an agent-readable reservation capabilities endpoint so agents can discover valid fields, party-size limits, and available times without reverse-engineering browser JavaScript.
-- [x] Extend reservation creation to accept optional agent metadata and persist it in reservation metadata for auditability.
-- [x] Improve the reservation form markup with machine-readable metadata and an explicit agent hint so browser agents can map fields reliably.
-- [x] Update `llms.txt` with the reservation contract and the website-first booking flow for external agents.
-- [x] Verify the changed flows with targeted local checks and document results.
+- [x] Review the existing reservation endpoints and the current OpenAI GPT Actions requirements.
+- [x] Add a public OpenAPI schema that maps cleanly to the reservation endpoints.
+- [x] Adjust endpoint request/response contracts only where needed for better GPT Action compatibility.
+- [x] Add concise setup documentation for wiring the schema into a Custom GPT Action.
+- [x] Verify schema consistency against the implemented API and document any deployment prerequisites.
+- [x] Add a dedicated privacy policy page and surface its production URL for GPT builder use.
 
 ## Review
 
-- Added `api/_reservation-rules.js` as the shared source of truth for party-size limits, time-slot generation, and date/time normalization.
-- Added `GET /api/reservations/capabilities` for machine-readable discovery of valid fields, limits, opening rules, and date-specific available times.
-- Tightened `POST /api/reservations` so invalid times outside opening hours are rejected server-side instead of only in browser JavaScript.
-- Added optional `agent` metadata support that is persisted via Supabase RPC metadata for later auditing.
-- Added machine-readable contract markers to the reservation form and documented the flow in `llms.txt`.
+- Added a public OpenAPI schema at `.well-known/openapi-reservations.json` for Custom GPT Actions.
+- Reused the existing public reservation endpoints:
+  - `GET /api/reservations/capabilities`
+  - `POST /api/reservations`
+- Kept the backend contract minimal because the current request/response shape was already compatible with an action-driven reservation flow.
+- Added `GPT_ACTIONS.md` with the exact schema URL, recommended GPT builder setup, and deployment caveats.
+- Added `datenschutz.html` and linked it from the main footer so the site now exposes a dedicated privacy policy URL for GPT publication.
 - Verification run:
-  - `node --check api/_reservation-rules.js`
+  - `node -e "JSON.parse(require('fs').readFileSync('.well-known/openapi-reservations.json','utf8'))"`
   - `node --check api/reservations.js`
   - `node --check api/reservations/capabilities.js`
-  - `node -e "const rules=require('./api/_reservation-rules'); ..."`
-- Remaining gap: no automated browser or deployed integration test exists in this repo, so the end-to-end Vercel/Supabase path was not executed locally.
+  - Node-based schema consistency check for operation IDs and required reservation fields
+- GPT builder privacy policy URL:
+  - `https://klapp.pizza/datenschutz.html`
