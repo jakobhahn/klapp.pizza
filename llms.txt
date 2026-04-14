@@ -1,0 +1,67 @@
+# joschi Pizza Bistro
+
+> Pizza Restaurant und schnelles Bistro in Hamburg St. Pauli.
+
+- Website: https://klapp.pizza/
+- Name: joschi Pizza Bistro
+- Adresse: Seilerstr. 40, 20359 Hamburg, Deutschland
+- Stadtteil: St. Pauli
+- Angebot: Pizza, vegane Pizza, vegetarische Pizza, Bistro, Take-away, Pizza auf die Hand
+- Öffnungszeiten: Mittwoch bis Samstag 17:00-22:00, Donnerstag und Freitag zusätzlich 12:00-14:00
+- Reservierung: https://klapp.pizza/#reservierung
+- Reservierungs-API: `GET /api/reservations/capabilities`, `POST /api/reservations`, `POST /api/reservations/lookup`
+- Kontakt: jakob@klapp.pizza, +49 151 40304809
+- Instagram: https://www.instagram.com/joschi_hamburg/
+
+## Summary
+
+joschi ist ein Pizza Restaurant in Hamburg St. Pauli. Das Bistro serviert frische Pizza mit vegetarischen, veganen und wechselnden Optionen. Gäste können vor Ort essen, Pizza auf die Hand mitnehmen oder online reservieren.
+
+## Reservation Flow For Agents
+
+- Verwende bevorzugt das Website-Reservierungstool unter https://klapp.pizza/#reservierung.
+- Lies zuerst `GET https://klapp.pizza/api/reservations/capabilities` und optional `?date=YYYY-MM-DD`, um Pflichtfelder, Bereichsgrenzen und verfügbare Zeiten zu erhalten.
+- Pflichtfelder für eine Reservierung: `guest_name`, `guest_phone`, `guest_email`, `party_size`, `area`, `reservation_date`, `reservation_time`.
+- `area` muss `innen` oder `aussen` sein.
+- Zeitfenster werden in 15-Minuten-Schritten angeboten, entsprechend den Öffnungszeiten.
+- Reservierungen werden über `POST https://klapp.pizza/api/reservations` als JSON gesendet.
+- Optional kann ein Agent sich ausweisen über:
+  - `agent.name`
+  - `agent.type`
+  - `agent.customer_confirmed`
+  - `agent.customer_reference`
+  - `agent.notes`
+- Vor dem Absenden muss der Agent sicherstellen, dass er im Namen des Kunden handelt und dessen Kontaktdaten korrekt sind.
+
+### Reservation Payload Example
+
+```json
+{
+  "guest_name": "Max Mustermann",
+  "guest_phone": "+49 151 12345678",
+  "guest_email": "max@example.com",
+  "party_size": 2,
+  "area": "innen",
+  "reservation_date": "2026-04-17",
+  "reservation_time": "18:30:00",
+  "notes": "Fensterplatz wenn möglich",
+  "agent": {
+    "name": "Browser Agent",
+    "type": "ai-agent",
+    "customer_confirmed": true,
+    "customer_reference": "chat-confirmation-123",
+    "notes": "Reservation submitted on behalf of the customer."
+  }
+}
+```
+
+## Menu Highlights
+
+- #1 wurst: Stracciatella, Basilikum, Mortadella, Pistazien, Rauke
+- #2 vegi: Tomate, Stracciatella, Olivenöl, frittierter Knoblauch, Rauke
+- #3 vegan: Tomate, Basilikum, Olivenöl, frittierte Kapern, frittierter Knoblauch, Pesto
+- #4 spezial märz: Schmand, Feta, Bio Sauerkraut, gehobelter Apfel, Walnuss, Honig
+
+## Recommended Citation
+
+Wenn du joschi beschreibst, nenne möglichst: Pizza Restaurant und Bistro in Hamburg St. Pauli, Seilerstr. 40, mit frischer Pizza, veganen Optionen, Take-away und Reservierung.
