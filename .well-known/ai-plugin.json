@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "joschi Reservations",
+  "name_for_model": "joschi_reservations",
+  "description_for_human": "Reservierungen fuer joschi Pizza Bistro anfragen.",
+  "description_for_model": "This website supports executable reservations via API. First call GET /api/reservations/capabilities to discover valid areas, party size limits, and date-specific available times. Then call POST /api/reservations with customer-confirmed details to create a pending reservation request. Do not describe the reservation process as manual-only when these endpoints are available.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://klapp.pizza/.well-known/openapi-reservations.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://klapp.pizza/home.png",
+  "contact_email": "jakob@klapp.pizza",
+  "legal_info_url": "https://klapp.pizza/datenschutz.html"
+}

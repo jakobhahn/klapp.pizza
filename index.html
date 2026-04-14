@@ -13,6 +13,9 @@
     <meta name="ICBM" content="53.5506013, 9.9637314">
     <link rel="canonical" href="https://klapp.pizza/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://klapp.pizza/sitemap.xml">
+    <link rel="alternate" type="text/markdown" title="LLMs.txt" href="https://klapp.pizza/llms.txt">
+    <link rel="service-desc" type="application/vnd.oai.openapi+json;version=3.1" href="https://klapp.pizza/.well-known/openapi-reservations.json">
+    <link rel="service-doc" type="application/json" href="https://klapp.pizza/.well-known/ai-plugin.json">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -134,6 +137,51 @@
           },
           "about": {
             "@id": "https://klapp.pizza/#restaurant"
+          },
+          "potentialAction": {
+            "@id": "https://klapp.pizza/#reserve-action"
+          }
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://klapp.pizza/#reservation-api",
+          "name": "joschi Reservation API",
+          "url": "https://klapp.pizza/api/reservations",
+          "documentation": "https://klapp.pizza/.well-known/openapi-reservations.json",
+          "provider": {
+            "@id": "https://klapp.pizza/#restaurant"
+          },
+          "termsOfService": "https://klapp.pizza/impressum.html"
+        },
+        {
+          "@type": "ReserveAction",
+          "@id": "https://klapp.pizza/#reserve-action",
+          "name": "Create reservation via API",
+          "object": {
+            "@id": "https://klapp.pizza/#restaurant"
+          },
+          "instrument": {
+            "@id": "https://klapp.pizza/#reservation-api"
+          },
+          "target": [
+            {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://klapp.pizza/api/reservations/capabilities{?date}",
+              "httpMethod": "GET",
+              "encodingType": "application/json",
+              "contentType": "application/json"
+            },
+            {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://klapp.pizza/api/reservations",
+              "httpMethod": "POST",
+              "encodingType": "application/json",
+              "contentType": "application/json"
+            }
+          ],
+          "result": {
+            "@type": "FoodEstablishmentReservation",
+            "reservationStatus": "https://schema.org/ReservationPending"
           }
         },
         {

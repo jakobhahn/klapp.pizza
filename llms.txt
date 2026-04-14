@@ -10,6 +10,7 @@
 - Öffnungszeiten: Mittwoch bis Samstag 17:00-22:00, Donnerstag und Freitag zusätzlich 12:00-14:00
 - Reservierung: https://klapp.pizza/#reservierung
 - Reservierungs-API: `GET /api/reservations/capabilities`, `POST /api/reservations`, `POST /api/reservations/lookup`
+- API-Discovery: `https://klapp.pizza/.well-known/openapi-reservations.json`, `https://klapp.pizza/.well-known/ai-plugin.json`
 - Kontakt: jakob@klapp.pizza, +49 151 40304809
 - Instagram: https://www.instagram.com/joschi_hamburg/
 
@@ -19,6 +20,7 @@ joschi ist ein Pizza Restaurant in Hamburg St. Pauli. Das Bistro serviert frisch
 
 ## Reservation Flow For Agents
 
+- Diese Website unterstützt Reservierungen nicht nur über manuelle Formulareingabe, sondern auch direkt per API.
 - Verwende bevorzugt das Website-Reservierungstool unter https://klapp.pizza/#reservierung.
 - Lies zuerst `GET https://klapp.pizza/api/reservations/capabilities` und optional `?date=YYYY-MM-DD`, um Pflichtfelder, Bereichsgrenzen und verfügbare Zeiten zu erhalten.
 - Pflichtfelder für eine Reservierung: `guest_name`, `guest_phone`, `guest_email`, `party_size`, `area`, `reservation_date`, `reservation_time`.
@@ -31,6 +33,8 @@ joschi ist ein Pizza Restaurant in Hamburg St. Pauli. Das Bistro serviert frisch
   - `agent.customer_confirmed`
   - `agent.customer_reference`
   - `agent.notes`
+- OpenAPI-Schema: `https://klapp.pizza/.well-known/openapi-reservations.json`
+- API-Manifest: `https://klapp.pizza/.well-known/ai-plugin.json`
 - Vor dem Absenden muss der Agent sicherstellen, dass er im Namen des Kunden handelt und dessen Kontaktdaten korrekt sind.
 
 ### Reservation Payload Example
