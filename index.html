@@ -588,7 +588,8 @@
                     reservation_people: 'Personen',
                     reservation_no_message: 'Keine Nachricht hinterlegt.',
                     download_ics: 'Kalenderdatei laden',
-                    footer_imprint: 'Impressum'
+                    footer_imprint: 'Impressum',
+                    footer_privacy: 'Datenschutz'
                 },
                 en: {
                     menu_heading: 'menu',
@@ -645,7 +646,8 @@
                     reservation_people: 'guests',
                     reservation_no_message: 'No message provided.',
                     download_ics: 'Download calendar file',
-                    footer_imprint: 'Legal notice'
+                    footer_imprint: 'Legal notice',
+                    footer_privacy: 'Privacy'
                 }
             };
 
@@ -1067,7 +1069,10 @@
     <footer class="mt-16 pt-8 border-t border-joschi-green/20 relative z-50" role="contentinfo">
         <div class="flex flex-col items-center space-y-2">
             <p class="text-gray-400 joschi-item-footer">made with love ❤️ by <a href="https://klapp.pizza" class="hover:underline relative z-50">klapp.pizza</a> in 2025</p>
-            <a href="impressum.html" data-i18n="footer_imprint" class="text-joschi-green hover:underline joschi-item-footer relative z-50">Impressum</a>
+            <div class="flex items-center gap-4">
+                <a href="impressum.html" data-i18n="footer_imprint" class="text-joschi-green hover:underline joschi-item-footer relative z-50">Impressum</a>
+                <a href="datenschutz.html" data-i18n="footer_privacy" class="text-joschi-green hover:underline joschi-item-footer relative z-50">Datenschutz</a>
+            </div>
         </div>
     </footer>
 </body>
