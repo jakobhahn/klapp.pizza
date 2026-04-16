@@ -791,6 +791,10 @@
 
             function getOpenTimesForDate(dateStr) {
                 // dateStr: YYYY-MM-DD
+                if (dateStr === '2026-04-26') {
+                    return generateQuarterTimes(14 * 60, 20 * 60);
+                }
+
                 var parts = dateStr.split('-').map(Number);
                 var y = parts[0], m = parts[1] - 1, d = parts[2];
                 var dt = new Date(y, m, d);

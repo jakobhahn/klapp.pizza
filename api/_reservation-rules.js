@@ -2,6 +2,9 @@ const MAX_PARTY_SIZE = {
   innen: 25,
   aussen: 8
 };
+const DATE_SPECIFIC_OPENINGS = {
+  '2026-04-26': { start: '14:00', end: '20:00' }
+};
 
 function normalizeArea(value) {
   return value === 'aussen' ? 'aussen' : 'innen';
@@ -44,6 +47,14 @@ function isValidDateString(dateStr) {
 function getOpenTimesForDate(dateStr) {
   if (!isValidDateString(dateStr)) {
     return [];
+  }
+
+  const specialOpening = DATE_SPECIFIC_OPENINGS[dateStr];
+  if (specialOpening) {
+    return generateQuarterTimes(
+      timeToMinutes(specialOpening.start),
+      timeToMinutes(specialOpening.end)
+    );
   }
 
   const parts = dateStr.split('-').map(Number);
@@ -97,6 +108,12 @@ function getReservationCapabilities(dateStr) {
       { days: ['wednesday', 'thursday', 'friday', 'saturday'], start: '17:00', end: '22:00', interval_minutes: 15 },
       { days: ['thursday', 'friday'], start: '12:00', end: '14:00', interval_minutes: 15 }
     ],
+    special_openings: Object.entries(DATE_SPECIFIC_OPENINGS).map(([date, rule]) => ({
+      date,
+      start: rule.start,
+      end: rule.end,
+      interval_minutes: 15
+    })),
     required_fields: [
       'guest_name',
       'guest_phone',

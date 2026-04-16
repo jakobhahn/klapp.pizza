@@ -2,31 +2,20 @@
 
 ## Goal
 
-Expose stronger hidden machine-readable discovery signals so AI models can recognize that reservations can be executed via API, without adding visible website copy.
+Allow reservations on 2026-04-26 from 14:00 through 20:00.
 
 ## Plan
 
-- [x] Inspect the current hidden reservation discovery signals already present on `main`.
-- [x] Add stronger hidden discovery metadata in the homepage head and structured data.
-- [x] Add a `.well-known` API manifest describing reservation execution for models.
-- [x] Update `llms.txt` to state clearly that reservations are executable via API, not only via manual form usage.
-- [x] Verify syntax and cross-link consistency, then document remaining platform limitations.
+- [x] Inspect backend and frontend reservation slot generation to find the shared date/time rules.
+- [x] Add a date-specific override for 2026-04-26 so available slots run from 14:00 to 20:00.
+- [x] Update the frontend slot generation to match the backend exactly for that date.
+- [x] Verify the generated slots and document the result.
 
 ## Review
 
-- Added `.well-known/ai-plugin.json` as a hidden API manifest that explicitly tells models the site supports executable reservations via API.
-- Added hidden discovery links in the homepage head:
-  - `rel="alternate"` to `llms.txt`
-  - `rel="service-desc"` to the OpenAPI schema
-  - `rel="service-doc"` to the API manifest
-- Extended homepage JSON-LD with:
-  - `WebAPI` node for the reservation API
-  - `ReserveAction` node with `GET /api/reservations/capabilities` and `POST /api/reservations` entry points
-- Updated `llms.txt` so it now states explicitly that reservations are executable via API and links both discovery files.
+- Added a date-specific reservation opening override for `2026-04-26` in the backend rules so that Sunday offers quarter-hour booking slots from `14:00` through `19:45` with `20:00` as the exclusive end boundary.
+- Added the same `2026-04-26` override in the frontend slot generator so the website dropdown matches backend validation.
+- Extended reservation capabilities with `special_openings` so machine-readable consumers can also discover the exception.
 - Verification run:
-  - `node -e "JSON.parse(require('fs').readFileSync('.well-known/ai-plugin.json','utf8'))"`
-  - Node-based checks that `index.html` contains the new hidden discovery links and JSON-LD nodes
-  - Node-based checks that `llms.txt` contains the executable-API wording and discovery URLs
-- Remaining limitation:
-  - These hidden signals improve discoverability for crawlers, agents, and model pipelines that ingest `llms.txt`, structured data, or `.well-known` manifests.
-  - They still cannot force the standard consumer ChatGPT product to execute API calls unless that product mode actually supports external actions for the current session.
+- `node` assertion check confirmed backend slots for `2026-04-26` start at `14:00`, end at `19:45`, contain 24 slots, exclude `20:00`, and match `available_times`.
+- `node` check confirmed the frontend contains the same `2026-04-26` override and `14:00`-`20:00` range.
