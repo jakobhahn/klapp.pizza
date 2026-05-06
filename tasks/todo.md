@@ -2,20 +2,18 @@
 
 ## Goal
 
-Allow reservations on 2026-04-26 from 14:00 through 20:00.
+Update the monthly special for May to the new ingredient list.
 
 ## Plan
 
-- [x] Inspect backend and frontend reservation slot generation to find the shared date/time rules.
-- [x] Add a date-specific override for 2026-04-26 so available slots run from 14:00 to 20:00.
-- [x] Update the frontend slot generation to match the backend exactly for that date.
-- [x] Verify the generated slots and document the result.
+- [x] Locate every source that renders or exposes the monthly special.
+- [x] Update the May special text consistently in those sources.
+- [x] Verify the final content and document the change.
 
 ## Review
 
-- Added a date-specific reservation opening override for `2026-04-26` in the backend rules so that Sunday offers quarter-hour booking slots from `14:00` through `19:45` with `20:00` as the exclusive end boundary.
-- Added the same `2026-04-26` override in the frontend slot generator so the website dropdown matches backend validation.
-- Extended reservation capabilities with `special_openings` so machine-readable consumers can also discover the exception.
+- Updated the monthly special in the visible menu section of `index.html` from April to May.
+- Updated the structured menu data in `index.html` so machine-readable consumers see the same May special.
+- Updated `llms.txt` to keep the summarized menu highlights aligned with the website.
 - Verification run:
-- `node` assertion check confirmed backend slots for `2026-04-26` start at `14:00`, end at `19:45`, contain 24 slots, exclude `20:00`, and match `available_times`.
-- `node` check confirmed the frontend contains the same `2026-04-26` override and `14:00`-`20:00` range.
+- `rg` confirmed `#4 spezial mai` and the full ingredient list appear in both `index.html` locations and in `llms.txt`.
