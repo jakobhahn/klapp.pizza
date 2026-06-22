@@ -61,8 +61,8 @@ joschi ist ein Pizza Restaurant in Hamburg St. Pauli. Das Bistro serviert frisch
 
 ## Menu Highlights
 
-- #1 wurst: Stracciatella, Basilikum, Mortadella, Pistazien, Rauke
-- #2 vegi: Tomate, Stracciatella, Olivenöl, frittierter Knoblauch, Rauke
+- #1 wurst: Stracciatella-Käse, Basilikum, Mortadella, Pistazien, Rauke
+- #2 vegi: Tomate, Stracciatella-Käse, Olivenöl, frittierter Knoblauch, Rauke
 - #3 vegan: Tomate, Basilikum, Olivenöl, frittierte Kapern, frittierter Knoblauch, Pesto
 - #4 spezial mai: Erbsen-Joghurt Basilikum Creme, Zitronenabrieb, Spinat, Schwarzkümmel, Scharfe Mandeln, Feta
 

@@ -2,17 +2,21 @@
 
 ## Goal
 
-Birthday banner should no longer render, while its code remains commented out for later reuse.
+Replace menu mentions of `Stracciatella` with `Stracciatella-Käse` everywhere the menu is exposed.
 
 ## Plan
 
-- [x] Locate the banner markup and related layout styling.
-- [x] Comment out the banner and its banner-only spacing/styling without deleting it.
-- [x] Verify the banner text no longer renders as active HTML and document the change.
+- [x] Locate every visible and machine-readable menu mention of `Stracciatella`.
+- [x] Update menu text consistently in `index.html` and `llms.txt`.
+- [x] Verify no old menu wording remains and document the change.
 
 ## Review
 
-- Commented out the birthday banner markup in `index.html` so it no longer renders but remains available for reuse.
-- Commented out the banner-only CSS and top padding so the page does not keep an empty banner gap.
+- Updated visible menu items #1 and #2 in `index.html` from `Stracciatella` to `Stracciatella-Käse`.
+- Updated matching JSON-LD menu descriptions and the restaurant description in `index.html`.
+- Updated `llms.txt` menu highlights for #1 and #2.
 - Verification run:
-- `node -e` stripped HTML/CSS comments and confirmed the birthday text, banner classes, and banner top padding are absent from active content.
+- `rg -P "Stracciatella(?!-Käse)" index.html llms.txt` found no old menu wording.
+- `rg "Stracciatella-Käse" index.html llms.txt` confirmed seven updated occurrences.
+- `node -e` parsed the JSON-LD block successfully.
+- `git diff --check` passed.
