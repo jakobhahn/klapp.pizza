@@ -2,18 +2,17 @@
 
 ## Goal
 
-Update the monthly special for May to the new ingredient list.
+Birthday banner should no longer render, while its code remains commented out for later reuse.
 
 ## Plan
 
-- [x] Locate every source that renders or exposes the monthly special.
-- [x] Update the May special text consistently in those sources.
-- [x] Verify the final content and document the change.
+- [x] Locate the banner markup and related layout styling.
+- [x] Comment out the banner and its banner-only spacing/styling without deleting it.
+- [x] Verify the banner text no longer renders as active HTML and document the change.
 
 ## Review
 
-- Updated the monthly special in the visible menu section of `index.html` from April to May.
-- Updated the structured menu data in `index.html` so machine-readable consumers see the same May special.
-- Updated `llms.txt` to keep the summarized menu highlights aligned with the website.
+- Commented out the birthday banner markup in `index.html` so it no longer renders but remains available for reuse.
+- Commented out the banner-only CSS and top padding so the page does not keep an empty banner gap.
 - Verification run:
-- `rg` confirmed `#4 spezial mai` and the full ingredient list appear in both `index.html` locations and in `llms.txt`.
+- `node -e` stripped HTML/CSS comments and confirmed the birthday text, banner classes, and banner top padding are absent from active content.

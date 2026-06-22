@@ -231,7 +231,9 @@
             color: #38A169; /* Matching joschi-green */
             background-color: #FFFFFF;
             overflow-x: hidden;
+            /* Birthday banner disabled.
             padding-top: 68px;
+            */
         }
         /* If using the tailwind.config.js approach with a build step, these would be utility classes.
            For CDN, we can define them here or use arbitrary values in classes. */
@@ -245,6 +247,7 @@
         .joschi-item-heading { font-weight: normal; /* Thin for "#1 vegi" etc. */ }
         .joschi-item-description { font-weight: normal; /* Thin for descriptions */ }
         .joschi-item-footer { font-weight: lighter; }
+        /* Birthday banner disabled.
         .joschi-banner-track {
             display: flex;
             width: max-content;
@@ -274,6 +277,7 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
+        */
 
     </style>
     <script>
@@ -292,6 +296,7 @@
       </script>
 </head>
 <body class="bg-white text-joschi-green font-joschi overflow-x-hidden">
+    <!-- Birthday banner disabled.
     <div class="fixed inset-x-0 top-0 z-50 overflow-hidden border-b border-joschi-green/20 bg-joschi-green text-white">
         <div class="px-4 py-3 text-sm uppercase tracking-[0.16em] md:px-6 md:py-4 md:text-base">
         <div class="joschi-banner-track whitespace-nowrap">
@@ -314,6 +319,7 @@
         </div>
         </div>
     </div>
+    -->
 
     <!-- Floating Background Image -->
     <div class="fixed right-0 top-1/2 -translate-y-1/2 z-0 overflow-hidden">
