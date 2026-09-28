@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="joschi Pizza Bistro Hamburg St. Pauli – Frische Pizza, vegane & vegetarische Optionen. Mittwoch–Samstag 17–22 Uhr. Seilerstr. 40, 20359 Hamburg. Jetzt reservieren.">
-    <meta name="keywords" content="Pizza Hamburg, Pizza St. Pauli, joschi Pizza Bistro, vegane Pizza Hamburg, Pizza Bistro Hamburg, Restaurant St. Pauli, Pizza bestellen Hamburg">
+    <title>Pizza in Hamburg St. Pauli nahe Reeperbahn | joschi</title>
+    <meta name="description" content="Frische Pizza in Hamburg St. Pauli, wenige Schritte von der Reeperbahn: joschi Pizza Bistro mit veganen und vegetarischen Optionen. Tisch reservieren.">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="joschi Pizza Bistro">
     <meta name="geo.region" content="DE-HH">
@@ -13,15 +13,18 @@
     <meta name="ICBM" content="53.5506013, 9.9637314">
     <link rel="canonical" href="https://klapp.pizza/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://klapp.pizza/sitemap.xml">
-    <link rel="alternate" type="text/markdown" title="LLMs.txt" href="https://klapp.pizza/llms.txt">
+    <link rel="alternate" type="text/markdown" title="Markdown-Version" href="https://klapp.pizza/index.md">
+    <link rel="describedby" type="text/markdown" href="https://klapp.pizza/llms.txt">
     <link rel="service-desc" type="application/vnd.oai.openapi+json;version=3.1" href="https://klapp.pizza/.well-known/openapi-reservations.json">
     <link rel="service-doc" type="application/json" href="https://klapp.pizza/.well-known/ai-plugin.json">
+    <link rel="stylesheet" href="seasonal-content.css">
+    <script src="seasonal-content.js"></script>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://klapp.pizza/">
-    <meta property="og:title" content="joschi – Pizza Bistro Hamburg St. Pauli">
-    <meta property="og:description" content="Frische Pizza, vegane & vegetarische Optionen in Hamburg St. Pauli. Seilerstr. 40. Mittwoch–Samstag 17–22 Uhr.">
+    <meta property="og:title" content="Pizza in Hamburg St. Pauli nahe Reeperbahn | joschi">
+    <meta property="og:description" content="Frische Pizza im joschi Pizza Bistro auf St. Pauli – mit veganen und vegetarischen Optionen. Tisch reservieren oder Events anfragen.">
     <meta property="og:image" content="https://klapp.pizza/home.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,8 +33,8 @@
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="joschi – Pizza Bistro Hamburg St. Pauli">
-    <meta name="twitter:description" content="Frische Pizza, vegane & vegetarische Optionen in Hamburg St. Pauli. Seilerstr. 40.">
+    <meta name="twitter:title" content="Pizza in Hamburg St. Pauli nahe Reeperbahn | joschi">
+    <meta name="twitter:description" content="Frische Pizza auf St. Pauli – mit veganen und vegetarischen Optionen. Tisch reservieren oder Events anfragen.">
     <meta name="twitter:image" content="https://klapp.pizza/home.png">
     
     <!-- Performance: Preconnect & DNS-Prefetch -->
@@ -53,7 +56,7 @@
           "@type": "Restaurant",
           "@id": "https://klapp.pizza/#restaurant",
           "name": "joschi Pizza Bistro",
-          "description": "Pizza Bistro in Hamburg St. Pauli mit frischen Pizzen, veganen und vegetarischen Optionen. Stracciatella-Käse, Mortadella, frittierter Knoblauch und mehr.",
+          "description": "Pizza Bistro in Hamburg St. Pauli nahe der Reeperbahn mit frischer Pizza, veganen und vegetarischen Optionen sowie Anfragen für Catering, private Feiern und Firmenevents.",
           "url": "https://klapp.pizza",
           "image": "https://klapp.pizza/home.png",
           "telephone": "+4915140304809",
@@ -87,6 +90,12 @@
           ],
           "servesCuisine": "Italian",
           "priceRange": "€€",
+          "sameAs": [
+            "https://www.instagram.com/joschi_hamburg/",
+            "https://www.google.com/maps/place/joschi+pizza+bistro/@53.5506012,9.9588605,17z"
+          ],
+          "areaServed": ["Hamburg", "St. Pauli", "Reeperbahn"],
+          "keywords": "Pizza Hamburg, Pizza St. Pauli, Pizza Reeperbahn, vegane Pizza, vegetarische Pizza, Catering Hamburg, Eventlocation St. Pauli, Weihnachtsfeier Hamburg",
           "menu": "https://klapp.pizza/#menu",
           "hasMenu": {
             "@type": "Menu",
@@ -124,8 +133,8 @@
           "@type": "WebPage",
           "@id": "https://klapp.pizza/#webpage",
           "url": "https://klapp.pizza/",
-          "name": "joschi – Pizza Bistro Hamburg St. Pauli | Menu & Kontakt",
-          "description": "joschi Pizza Bistro in Hamburg St. Pauli. Frische Pizzen, vegane Optionen. Öffnungszeiten, Adresse, Reservierung.",
+          "name": "Pizza in Hamburg St. Pauli nahe Reeperbahn | joschi",
+          "description": "Frische Pizza in Hamburg St. Pauli nahe der Reeperbahn. Menü, Öffnungszeiten, Adresse, Reservierung sowie Informationen zu Catering und Events.",
           "isPartOf": {
             "@type": "WebSite",
             "@id": "https://klapp.pizza/#website",
@@ -329,9 +338,18 @@
     <div class="container mx-auto px-6 py-8 md:px-12 md:py-12">
 
         <!-- Header-like Text Elements -->
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 md:mb-16" role="banner">
-            <h1 class="text-5xl md:text-6xl joschi-brand text-joschi-green mb-2 sm:mb-0">joschi</h1>
-            <p class="text-2xl md:text-3xl joschi-tagline text-joschi-green" aria-hidden="true">Pizza Bistro</p>
+        <header class="mb-12 md:mb-16" role="banner">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                <h1 class="text-5xl md:text-6xl joschi-brand text-joschi-green mb-2 sm:mb-0">joschi <span class="block mt-2 text-xl md:text-2xl">Pizza Bistro in Hamburg St. Pauli</span></h1>
+                <p class="text-2xl md:text-3xl joschi-tagline text-joschi-green">Pizza Bistro</p>
+            </div>
+            <nav class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base" aria-label="Hauptnavigation">
+                <a href="#menu" class="hover:underline">Menü</a>
+                <a href="pizza-catering-hamburg.html" class="hover:underline">Pizza Catering</a>
+                <a href="eventlocation-st-pauli.html" class="hover:underline">Eventlocation mieten</a>
+                <a href="weihnachtsfeier-hamburg.html" class="hover:underline" data-seasonal="christmas">Weihnachtsfeier</a>
+                <a href="#reservierung" class="hover:underline">Reservieren</a>
+            </nav>
         </header>
 
         <!-- Main Content Area -->
@@ -366,7 +384,7 @@
                 <!-- Contact Content -->
                 <div class="relative z-10">
                     <h2 id="contact-heading" data-i18n="contact_heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-4 md:mb-6">kontakt</h2>
-                    <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">Seilerstr.40<br>
+                    <p class="text-base md:text-lg joschi-item-description text-joschi-green mb-8 md:mb-10">Seilerstr. 40<br>
                             20359 Hamburg<br>
                             St. Pauli<br><br>
                         <a href="https://www.google.com/maps/place/joschi+pizza+bistro/@53.5506012,9.9588605,17z/data=!3m1!4b1!4m6!3m5!1s0x47b18f55901cf549:0xbbc00fa109dbe4db!8m2!3d53.5506013!4d9.9637314!16s%2Fg%2F11x14gkb4z?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="hover:underline" aria-label="joschi Pizza Bistro auf Google Maps anzeigen" data-i18n="map_link">
@@ -404,6 +422,19 @@
             </section>
 
         </main>
+
+        <section id="events" class="mt-16 md:mt-20 relative z-10" aria-labelledby="events-heading">
+            <h2 id="events-heading" class="text-4xl md:text-5xl joschi-section-heading text-joschi-green mb-6 md:mb-8">Pizza, Catering &amp; Events auf St. Pauli</h2>
+            <div class="max-w-3xl space-y-4 text-base md:text-lg joschi-item-description text-joschi-green">
+                <p>Du suchst Pizza Catering in Hamburg oder möchtest eine besondere Eventlocation auf St. Pauli mieten? Im joschi in der Seilerstraße, wenige Schritte von der Reeperbahn, verbinden wir Pizza, persönliche Atmosphäre und kurze Wege mitten im Viertel.</p>
+                <p>Ob Geburtstag, Teamabend, Firmenfeier<span data-seasonal="christmas"> oder Weihnachtsfeier</span>: Schreib uns mit Anlass, Termin und Personenzahl. Wir besprechen individuell, welches Format zu deiner Veranstaltung passt.</p>
+                <div class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+                    <a href="pizza-catering-hamburg.html" class="hover:underline">Mehr zu Pizza Catering in Hamburg →</a>
+                    <a href="eventlocation-st-pauli.html" class="hover:underline">Eventlocation auf St. Pauli mieten →</a>
+                    <a href="weihnachtsfeier-hamburg.html" class="hover:underline" data-seasonal="christmas">Weihnachtsfeier in Hamburg planen →</a>
+                </div>
+            </div>
+        </section>
 
         <!-- FAQ Section für Featured Snippets & KI -->
         <section id="faq" class="mt-16 md:mt-20" aria-labelledby="faq-heading">

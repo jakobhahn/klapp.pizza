@@ -1,0 +1,7 @@
+[data-seasonal="christmas"] {
+  display: none !important;
+}
+
+html[data-christmas-season="active"] [data-seasonal="christmas"] {
+  display: revert !important;
+}

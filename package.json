@@ -4,6 +4,7 @@
   "main": "tailwind.config.js.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "check:seo": "node scripts/check-seo.mjs && node --test scripts/seasonal-content.test.mjs",
     "start": "live-server --port=3000"
   },
   "keywords": [],
