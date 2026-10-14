@@ -11,3 +11,4 @@
 - Keep local SEO qualifiers such as “nahe Reeperbahn” out of the prominent homepage hero when the user wants a cleaner brand presentation; retain them in metadata, structured data, and relevant supporting copy instead.
 - Preserve the original right-aligned “Pizza Bistro” hero tagline on the homepage; local SEO wording must not replace this brand element.
 - When the user references one numbered list item, change only that item's wording unless they explicitly ask to remove the other items; preserve the complete list and numbering.
+- Bei einer korrigierten Menübezeichnung die genaue gewünschte Nummerierung übernehmen und sichtbares Menü, JSON-LD und Markdown gemeinsam aktualisieren.

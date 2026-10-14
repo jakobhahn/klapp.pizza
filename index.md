@@ -27,7 +27,7 @@ joschi ist ein Pizza Bistro in der Seilerstr. 40, 20359 Hamburg, im Stadtteil St
 - #1 wurst: Stracciatella-Käse, Basilikum, Mortadella, Pistazien, Rauke
 - #2 vegi: Tomate, Stracciatella-Käse, Olivenöl, frittierter Knoblauch, Rauke
 - #3 vegan: Tomate, Basilikum, Olivenöl, frittierte Kapern, frittierter Knoblauch, Pesto
-- Monatsspezial SELLERIE × APFEL: Selleriecreme, dünne Scheiben gerösteter Sellerie, säuerlicher Apfel, fein gehobelt, Walnuss-Crunch, Öl, eingelegte Senfkörner, schwarzer Pfeffer
+- #4 SELLERIE × APFEL: Selleriecreme, dünne Scheiben gerösteter Sellerie, säuerlicher Apfel, fein gehobelt, Walnuss-Crunch, Öl, eingelegte Senfkörner, schwarzer Pfeffer
 
 Kanonische Webseite: https://klapp.pizza/
 Letzte inhaltliche Aktualisierung: 2026-10-14

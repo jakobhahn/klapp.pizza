@@ -1,5 +1,18 @@
 # Todo
 
+## Menübezeichnung #4 SELLERIE × APFEL
+
+### Plan
+
+- [x] Bezeichnung in sichtbarem HTML, JSON-LD und Markdown auf „#4 SELLERIE × APFEL“ ändern.
+- [x] Konsistenz und vorhandene Prüfungen verifizieren; Commit und Push vorbereitet.
+
+### Review
+
+- Nur die Bezeichnung geändert; Zutaten unverändert.
+
+- Konsistenzprüfung, SEO-Prüfung mit sechs Tests und Diff-Prüfung bestanden. Git-Commit und Push auf Nutzerwunsch.
+
 ## Monatsspezial SELLERIE × APFEL
 
 ### Plan
