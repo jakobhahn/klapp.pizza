@@ -1,5 +1,20 @@
 # Todo
 
+## Monatsspezial SELLERIE × APFEL
+
+### Plan
+
+- [x] Bestehendes Spezial und alle Menü-Darstellungen prüfen.
+- [x] Sichtbares Menü, JSON-LD und Markdown-Menü mit den sieben gelieferten Zutaten aktualisieren.
+- [x] Konsistenz, SEO-Prüfung und Diff prüfen; Ergebnis festhalten.
+
+### Review
+
+- KÜRBIS CRUNCH durch SELLERIE × APFEL mit allen sieben gelieferten Zutaten ersetzt; bestehendes Menüformat beibehalten.
+- Sichtbares HTML, JSON-LD und Markdown-Menü sind konsistent; Aktualisierungsdatum im Markdown auf 2026-10-14 gesetzt.
+- Konsistenzprüfung, `npm run check:seo` (sechs öffentliche Seiten und sechs Tests) und `git diff --check` erfolgreich.
+- Vorhandene Änderungen anderer Aufgaben erhalten. Veröffentlichung per Git-Commit und Push auf Nutzerwunsch.
+
 ## Goal
 
 Improve local organic visibility for pizza, catering, events, venue hire, Christmas parties, St. Pauli, and Reeperbahn searches without keyword stuffing or unverifiable ranking promises.
